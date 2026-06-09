@@ -1,0 +1,57 @@
+# lamill.toml — per-site config consumed by lamill (portfolio/ops) and rankmill (content/audits).
+# [content] = stable identity, authored by hand. [todo] = volatile work state.
+# rankmill output lives in sites/<domain>/rankmill-output/, not here.
+
+schema = "lamill-toml-v1"
+
+[deploy]
+platform = "cf-pages"
+production_branch = "main"
+custom_domains = [
+    "mspproof.com",
+]
+
+[index]
+indexnow_key = "9d41fe536a8de90d4fdc3f29e1e01ae5"
+indexnow_enabled = true
+
+[stack]
+framework = "astro"
+
+# Tracked todos for mspproof.com. status: "done" | "open".
+[[todo]]
+status = "open"
+priority = "high"
+task = "Fill in [content] block: tone"
+
+[[todo]]
+status = "open"
+priority = "medium"
+task = "Check SEO: GSC indexation + coverage (revisit ~2026-06-22)"
+
+[[todo]]
+status = "open"
+priority = "medium"
+task = "Verify GA4 is receiving data (check Realtime after first traffic)"
+
+[[todo]]
+status = "open"
+priority = "low"
+task = "Confirm GSC verification + sitemap submitted (re-run deploy if it timed out)"
+
+[content]
+# Declarative content identity for this site.
+# Authored by the human; consumed by rankmill to generate drafts and run audits.
+# Leave fields empty until you have a deliberate answer. Empty is better than wrong.
+site_type = "b2b"
+primary_keyword = "CMMC Microsoft 365 evidence checklist"
+secondary_keywords = [
+    "CMMC MFA evidence",
+    "NIST 800-171 audit logging evidence",
+    "CMMC software for MSPs",
+]
+icp = "The ideal customer is an MSP or compliance-focused MSSP managing 10+ defense contractor clients that need CMMC Level 1 or Level 2 readiness support. They already handle Microsoft 365, Entra, GCC/GCC High, MFA, access control, logging, and security policy configuration, but lose billable time manually collecting evidence for each client."
+urgency_trigger = "Clients need CMMC/NIST readiness and MSPs are losing billable hours collecting evidence manually"
+penalty = "Continued loss of billable time and delayed or incomplete CMMC/NIST readiness for defense contractor clients"
+tone = ""                 # e.g. "direct, technical, no fluff" or "warm, plainspoken"
+law = "CMMC; NIST SP 800-171"
