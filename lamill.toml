@@ -20,8 +20,7 @@ framework = "astro"
 
 # Tracked todos for mspproof.com. status: "done" | "open".
 [[todo]]
-status = "open"
-priority = "high"
+status = "done"
 task = "Fill in [content] block: tone"
 
 [[todo]]
@@ -53,5 +52,5 @@ secondary_keywords = [
 icp = "The ideal customer is an MSP or compliance-focused MSSP managing 10+ defense contractor clients that need CMMC Level 1 or Level 2 readiness support. They already handle Microsoft 365, Entra, GCC/GCC High, MFA, access control, logging, and security policy configuration, but lose billable time manually collecting evidence for each client."
 urgency_trigger = "Clients need CMMC/NIST readiness and MSPs are losing billable hours collecting evidence manually"
 penalty = "Continued loss of billable time and delayed or incomplete CMMC/NIST readiness for defense contractor clients"
-tone = ""                 # e.g. "direct, technical, no fluff" or "warm, plainspoken"
+tone = "direct, technical, no fluff — credible and practitioner-to-practitioner"
 law = "CMMC; NIST SP 800-171"
