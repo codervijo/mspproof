@@ -22,5 +22,8 @@ build/
 # Cloudflare
 .wrangler/
 
+# Astro (generated content cache + types — never tracked)
+.astro/
+
 # Caches
 .eslintcache
