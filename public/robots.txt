@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://mspproof.com/sitemap.xml
+Sitemap: https://mspproof.com/sitemap-index.xml
