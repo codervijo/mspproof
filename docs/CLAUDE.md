@@ -32,7 +32,7 @@ git push            # Cloudflare Pages auto-builds on push to main
     workspace) → `~/work/projects/builder/` (central builder).
   - Stack: pnpm-only. No `package-lock.json` / `bun.lockb` / `yarn.lock`.
   - Deploy: Cloudflare Pages via `wrangler.jsonc`. No `_redirects`
-    SPA fallback (uses CF's `not_found_handling` instead).
+    catch-all; `not_found_handling` is `"404-page"` (no SPA fallback).
 
 ## Heading hygiene
 

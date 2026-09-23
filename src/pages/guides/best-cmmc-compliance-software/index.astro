@@ -1,0 +1,492 @@
+---
+// src/pages/guides/best-cmmc-compliance-software/index.astro
+//
+// Vendor roundup targeting "cmmc compliance software", written for MSPs
+// delivering CMMC across many client tenants.
+//
+// Vendor facts were checked against vendor pages on 2026-09-22 (see the
+// Sources section). While any [VERIFY] marker remains in this file the page
+// stays noindex and is excluded from the sitemap (astro.config.mjs filter).
+// Clear both together.
+import "../../../styles/global.css";
+
+const site = "https://mspproof.com";
+const path = "/guides/best-cmmc-compliance-software/";
+const url = `${site}${path}`;
+const title = "Best CMMC Compliance Software for MSPs (2026)";
+const description =
+  "Seven CMMC tools compared for MSPs running a book of defense contractor tenants: multi-client consoles, evidence collection vs. tracking, pricing, assessor fit.";
+const checked = "2026-09-22";
+const verifyPending = true;
+
+const faqs = [
+  {
+    q: "Can CMMC compliance software get my clients certified?",
+    a: "No. Only an authorized C3PAO (for Level 2 certification) or DoD's DIBCAC (for Level 3) can issue a CMMC certification. Software organizes documentation and evidence so the assessment goes faster and with fewer surprises. Any vendor that implies otherwise is overselling.",
+  },
+  {
+    q: "Do MSPs need their own CMMC certification?",
+    a: "Not as a standalone requirement under 32 CFR 170. A non-cloud External Service Provider's services are in the client's assessment scope and are assessed as part of the client's assessment. In practice that means your tooling, admin accounts and processes get looked at once per client assessment. How MSPs are treated is one of the questions DoD's 2026 CMMC Reform Task Force asked industry about, so this could change.",
+  },
+  {
+    q: "Is Phase 2 still happening in November 2026?",
+    a: "Not as scheduled. DoD suspended the Phase 2 transition on July 13, 2026, pending a Reform Task Force review. Phase 1 self-assessments, DFARS 252.204-7012, SPRS score posting and annual affirmations all remain in effect.",
+  },
+  {
+    q: "Which of these tools pulls evidence directly from Microsoft 365 or Entra?",
+    a: "Of the seven reviewed, only Hyperproof names Microsoft integrations on its own site (Azure AD, Intune, SharePoint, OneDrive, Teams), and none of the seven names a GCC High connector on its public pages. The others either take uploaded evidence or collect from other sources such as AWS or vulnerability scanners. Ask each vendor to demonstrate collection against one of your own client tenants before you buy.",
+  },
+  {
+    q: "Should an MSP use one platform or two?",
+    a: "Many will end up with two: a program-management platform for the SSP, policies and POA&M across the full 110 requirements, and a separate collector for technical evidence from the environments they administer. The deciding question is whether the platform's evidence repository accepts the collector's output with timestamps and source data intact.",
+  },
+];
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": `${url}#article`,
+      headline: "CMMC compliance software for MSPs: which tools work across a book of client tenants",
+      description,
+      url,
+      dateModified: checked,
+      author: { "@id": `${site}/#organization` },
+      publisher: { "@id": `${site}/#organization` },
+      mainEntityOfPage: url,
+    },
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: `${site}/` },
+        { "@type": "ListItem", position: 2, name: "CMMC compliance software for MSPs", item: url },
+      ],
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: faqs.map((f) => ({
+        "@type": "Question",
+        name: f.q,
+        acceptedAnswer: { "@type": "Answer", text: f.a },
+      })),
+    },
+    { "@type": "Organization", "@id": `${site}/#organization`, name: "MSP Proof", url: `${site}/` },
+  ],
+};
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    {verifyPending && <meta name="robots" content="noindex, follow" />}
+    <link rel="canonical" href={url} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={url} />
+    <meta property="og:site_name" content="MSP Proof" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+
+    <script is:inline>
+      (function () {
+        try {
+          var stored = localStorage.getItem("theme");
+          var prefersDark =
+            window.matchMedia &&
+            window.matchMedia("(prefers-color-scheme: dark)").matches;
+          var theme = stored || (prefersDark ? "dark" : "light");
+          document.documentElement.classList.toggle("dark", theme === "dark");
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+  <body class="min-h-screen bg-background text-foreground antialiased">
+    <header class="border-b border-border">
+      <div class="mx-auto flex h-16 max-w-3xl items-center justify-between px-4 sm:px-6">
+        <a href="/" class="text-sm font-semibold tracking-tight text-navy">MSP Proof</a>
+        <a
+          href="/#pilot-form"
+          class="rounded-md bg-navy px-3 py-1.5 text-sm font-medium text-navy-foreground hover:opacity-90"
+        >Join the MSP pilot</a>
+      </div>
+    </header>
+
+    <main class="mx-auto max-w-3xl px-4 py-10 sm:px-6">
+      <nav aria-label="Breadcrumb" class="text-xs text-muted-foreground">
+        <a href="/" class="hover:text-foreground">Home</a>
+        <span aria-hidden="true"> / </span>
+        <span>CMMC compliance software for MSPs</span>
+      </nav>
+
+      <article class="guide">
+        <h1>CMMC compliance software for MSPs: which tools work across a book of client tenants</h1>
+        <p class="meta">Vendor details checked against vendor sites on <time datetime={checked}>September 22, 2026</time>. Pricing and features change; confirm with the vendor before you buy.</p>
+
+        <p class="lede">
+          If you deliver CMMC for many defense contractors at once, the shortlist is short. IntelliGRC, Cyturus
+          and SMPL-C are sold with an explicit multi-client console. FutureFeed and Paramify reach MSPs through
+          partner programs built around a per-client product. PreVeil and Hyperproof assume one organization.
+          None of the seven names a Microsoft 365 GCC High evidence connector on its public site. Most of them
+          track evidence you upload rather than collect it from the tenants you already administer.
+        </p>
+
+        <p>
+          Every other roundup for this search is written for the defense contractor. This one is written for the MSP
+          or MSSP running CMMC for ten, twenty or fifty clients. That changes what matters. The questions are whether
+          one login reaches every client, whether per-client pricing survives a book of forty tenants, and whether you
+          still export screenshots by hand once a week.
+        </p>
+
+        <h2 id="comparison">The seven tools at a glance</h2>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">Tool</th>
+                <th scope="col">Sold to</th>
+                <th scope="col">Multi-client console</th>
+                <th scope="col">Evidence</th>
+                <th scope="col">Public pricing</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">IntelliGRC</th>
+                <td>MSPs first</td>
+                <td>Yes, core product</td>
+                <td>Claims automated collection; public detail covers AI mapping of uploaded documents</td>
+                <td>Not published</td>
+              </tr>
+              <tr>
+                <th scope="row">Cyturus</th>
+                <td>Consultants, RPOs, MSSPs</td>
+                <td>Yes, white-label</td>
+                <td>Tracks; upload once, reuse across frameworks</td>
+                <td>Not published</td>
+              </tr>
+              <tr>
+                <th scope="row">SMPL-C</th>
+                <td>Contractors, MSPs, RPOs, C3PAOs</td>
+                <td>Yes</td>
+                <td>Generates SSP, SRM, POA&amp;M; AI review of uploaded documents</td>
+                <td>Quote only</td>
+              </tr>
+              <tr>
+                <th scope="row">FutureFeed</th>
+                <td>Contractors, plus partner program</td>
+                <td>Partner program for 10+ clients; console not described publicly</td>
+                <td>Tracks uploaded evidence</td>
+                <td>From $99/mo per org + $1,008/yr CMMC L2</td>
+              </tr>
+              <tr>
+                <th scope="row">Paramify</th>
+                <td>Contractors, plus Advisor Partner Network</td>
+                <td>Role-based access across client orgs</td>
+                <td>Collects from AWS and scanners; tracks the rest</td>
+                <td>$8,000–$25,000/yr for L2</td>
+              </tr>
+              <tr>
+                <th scope="row">PreVeil</th>
+                <td>Contractors directly</td>
+                <td>None found</td>
+                <td>Encrypted email/file enclave plus documentation templates</td>
+                <td>Pass: $450/mo for 3 users</td>
+              </tr>
+              <tr>
+                <th scope="row">Hyperproof</th>
+                <td>Enterprise GRC teams</td>
+                <td>Org switcher only</td>
+                <td>Collects via 60+ integrations incl. Azure AD, Intune</td>
+                <td>Not published</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2 id="what-changes">What changes when you run CMMC for a whole client book</h2>
+        <p>
+          A defense contractor buying compliance software has one environment, one SSP and one assessment. An MSP
+          has the same 110 NIST SP 800-171 requirements repeated across every client. Some of the work is shared,
+          like your own admin practices, your RMM and your onboarding process. Some is unique to each client, like
+          their facilities, their people and where their CUI flows. Four things decide whether a tool fits that shape.
+        </p>
+        <p>
+          <strong>One console or many logins.</strong> Tools built for one organization sometimes let a user belong
+          to several orgs. That's an org switcher, not a practice console. A real multi-client console shows every
+          client's readiness side by side. It lets you push a control implementation or policy template out once, and
+          it gives you roles that separate your staff from the client's staff. If the vendor only calls it
+          "multi-tenant" in a partner FAQ, ask for a demo with three sample clients.
+        </p>
+        <p>
+          <strong>Collecting versus tracking.</strong> Most CMMC platforms are evidence repositories. You take the
+          screenshot of the Conditional Access policy, export the audit log setting and upload it against the right
+          assessment objective. The platform keeps it organized and tells the assessor where it lives. That is
+          valuable, but the collection labor stays with you, and it scales linearly with client count. A collector
+          pulls the evidence itself through an API, with the source query and timestamp attached. For an MSP, the
+          difference is roughly the difference between a service that gets more profitable at scale and one that
+          doesn't.
+        </p>
+        <p>
+          <strong>Your own services are in scope.</strong> Under 32 CFR 170.19, a non-cloud External Service
+          Provider's services are "in the OSA's assessment scope and shall be assessed as part of the OSA's
+          assessment." Your remote-access tooling, privileged accounts and change process will be examined in every
+          client's assessment. A tool that lets you document your shared services once and reference them from each
+          client's SSP saves real time. So does keeping that documentation consistent across clients.
+        </p>
+        <p>
+          <strong>Pricing per client.</strong> Most published pricing is per organization. That's fine for a
+          contractor and adds up fast for an MSP. Take FutureFeed's smallest published tier as an example. It costs
+          $99 a month on an annual plan, plus the $1,008 CMMC Level 2 framework add-on, which is $2,196 a year per
+          client at list price. Across 20 clients that list-price arithmetic comes to $43,920 a year. FutureFeed
+          advertises volume and custom pricing for partners without publishing figures, so the real number for an
+          MSP will be lower. The point is to get partner pricing in writing before you build a service price on top
+          of it.
+        </p>
+
+        <h2 id="status">Where CMMC stands in September 2026</h2>
+        <p>
+          The DFARS acquisition rule (48 CFR, case 2019-D041) was published September 10, 2025 and took effect
+          November 10, 2025. That started Phase 1: Level 1 and Level 2 self-assessments in applicable solicitations.
+          Phase 2, which would have required C3PAO certification at Level 2 from November 10, 2026, was suspended on
+          July 13, 2026. DoD (now styling itself the Department of War) paused the Phase 2 transition and put later
+          milestones on hold while a CMMC Reform Task Force reviewed the program. The task force's 60-day window
+          closed in mid-September. Its recommendations had not been made public as of September 22, 2026.
+        </p>
+        <p>
+          What did not change: DFARS 252.204-7012 still applies, NIST SP 800-171 Rev 2 is still the standard, and
+          SPRS score posting and annual affirmations continue. Self-attested scores still carry False Claims Act
+          exposure if they don't hold up. Your clients' need for organized, defensible evidence is the same as it was.
+          Only the date by which a third party checks it has moved. The task force's request for information
+          specifically asked how cloud and managed service providers should be treated, so read its report when it
+          lands.
+        </p>
+        <p>
+          None of the tools below certifies anyone. C3PAOs and DIBCAC assessors certify. Software prepares.
+        </p>
+
+        <h2 id="msp-built">Built around a multi-client practice</h2>
+
+        <h3>IntelliGRC</h3>
+        <p>
+          IntelliGRC is the most explicitly MSP-first product here. Its homepage leads with "Built for MSPs," and it
+          describes "Provider Multi-Tenant Enablement" with cross-tenant content distribution, so a control
+          implementation written once can be pushed to many clients. Its January 2026 seed round ($3.5M, co-led by
+          Huntress CEO Kyle Hanslovan and Blu Ventures) included MSP operators from Ntiva and Integris. Integris runs
+          a CMMC managed service on the platform. The site says "automated evidence collection." The detail it
+          publishes describes AI assistants that analyze uploaded documents and map them to assessment objectives,
+          and no Microsoft 365, Entra or GCC High connector is named on its own site. Pricing isn't published.
+          Capterra lists a $425/month starting price, which the vendor site doesn't confirm. It describes itself as
+          "FedRAMP Moderate equivalent," which is not the same as FedRAMP authorized.
+        </p>
+
+        <h3>Cyturus</h3>
+        <p>
+          Cyturus sells through a "Powered by Cyturus" program that lets consulting firms, MSSPs and RPOs "run every
+          client from one console" under their own brand, which makes it a genuine white-label practice tool. It is
+          built on a control set derived from the Secure Controls Framework, so evidence uploaded once can be reused
+          across frameworks. That helps if your clients also need SOC 2 or ISO work. Evidence is uploaded, not
+          collected, and no Microsoft integrations are named. Cyturus built the Cyber AB's CMMC Readiness Tool
+          (announced in 2023), which is included for active RPO members. Pricing isn't published.
+        </p>
+
+        <h3>SMPL-C</h3>
+        <p>
+          SMPL-C's MSP page offers a "centralized, multi-tenant dashboard to track, manage, and standardize CMMC
+          efforts for multiple clients." Its strength is documentation: it generates the SSP, Shared Responsibility
+          Matrix and POA&amp;M with AI assistance, and reviews uploaded policies and evidence. It also markets mock
+          assessments to C3PAOs. It does not name Microsoft 365 or Entra integrations, so technical evidence still
+          comes from you. Pricing is quote-only across four Level 1 and Level 2 bundles. Its marketing claims, such as
+          "certification 40% faster," are vendor figures without published methodology.
+        </p>
+
+        <h2 id="partner-channel">Per-client products with a partner channel</h2>
+
+        <h3>FutureFeed</h3>
+        <p>
+          FutureFeed is a contractor-facing platform with the most transparent pricing in this group and an active
+          partner channel. It claims 1,400+ clients and 300+ partners. Its partner program targets providers "who need
+          to manage 10 or more client relationships." A separate CMMC Provider Fast-Track Program for MSPs is listed at
+          $600/month for the first year. We didn't find a public description of a single-login console across client
+          orgs, so ask for a demo. Evidence is uploaded, and the vendor's own guidance says file hashing for assessment
+          must happen outside the platform. For assessors there is a read-only Assessor role covering the dashboard
+          and SSP, plus evidence export. FutureFeed states it is "FedRAMP High Authorized (Class D)" and lists a
+          FedRAMP Marketplace ID.
+        </p>
+
+        <h3>Paramify</h3>
+        <p>
+          Paramify's background is FedRAMP compliance (it states it holds FedRAMP 20x Class C certification), which
+          matters if some of your clients also sell cloud services to government. It lists "ESP/MSP/MSSP" among its audiences and runs an Advisor Partner
+          Network for RPOs, assessors and MSPs. Its FAQ describes role-based access for advisors guiding multiple
+          client organizations. It is one of two tools here that name their collection sources: "evidence fetchers"
+          pull from AWS and other tools, and it imports Nessus, Qualys and Tenable scans. No Microsoft 365 connector
+          is named. Published pricing is $8,000–$25,000 a year for Level 2 and $2,000 a year for a gap-and-SPRS
+          roadmap. Separate $45,000 and $85,000 packages bundle in scoping, assessment and implementation services.
+          Paramify says plainly that "no compliance firm can guarantee authorization," which more vendors should
+          copy.
+        </p>
+
+        <h2 id="single-org">Built for one organization</h2>
+
+        <h3>PreVeil</h3>
+        <p>
+          PreVeil is a different category: an end-to-end encrypted email and file-sharing enclave for CUI, bundled
+          with a documentation package. The package includes an SSP, SOPs, a Shared Responsibility Matrix and diagram
+          templates, which the vendor says were validated by an independent C3PAO. An optional GRC add-on handles
+          manual evidence, SSP and POA&amp;M. PreVeil says it supports 102 of the 110 requirements. That claim is
+          about the enclave's scope, not the client's whole environment. It has an MSP/MSSP partner type but no
+          multi-client console we could find. For MSPs it's most useful as the answer to "where does the CUI live"
+          for small clients who won't move to GCC High. PreVeil Pass lists at $450/month for 3 users, prepaid for 12
+          months. The government tier is custom-quoted. PreVeil describes itself as FedRAMP Moderate equivalent.
+        </p>
+
+        <h3>Hyperproof</h3>
+        <p>
+          Hyperproof is enterprise GRC with CMMC as one of 120+ frameworks. It has the strongest evidence automation
+          of the seven: its "Hypersyncs" collect from 60+ integrations including Azure, Azure AD, Intune, SharePoint,
+          OneDrive and Teams. It announced FedRAMP Moderate authorization in March 2026. The catch for an MSP is
+          tenancy. Its help center describes an org switcher for users who belong to more than one organization, not
+          a practice console. We found no public confirmation of GCC High collection. Pricing isn't published.
+          Buyer-reported data on Vendr puts the median contract around $41,400 a year, which is priced for an
+          enterprise compliance team, not per small contractor.
+        </p>
+
+        <h2 id="scenarios">Three MSP situations and what fits</h2>
+        <p>
+          <strong>A 15-client MSP whose clients are all on Microsoft 365 GCC High.</strong> The program work, meaning
+          SSPs, policies and POA&amp;Ms, fits a multi-client platform such as IntelliGRC, Cyturus or SMPL-C. The
+          technical evidence (MFA enforcement, Conditional Access, audit log retention, admin roles) still has to come
+          out of fifteen tenants. No vendor here publicly names a GCC High connector, so budget analyst time per client
+          per evidence cycle, or pair the platform with a collector. Confirm the platform can ingest the collector's
+          files with timestamps intact.
+        </p>
+        <p>
+          <strong>An MSSP whose clients also sell cloud services to government.</strong> Paramify's FedRAMP
+          lineage earns its price here. One platform covers FedRAMP and CMMC, and assessors can work inside the
+          platform. At $8,000 or more per client per year at list, it fits clients with larger contracts better than a
+          book of 12-person machine shops.
+        </p>
+        <p>
+          <strong>The failure case: buying enterprise GRC for a book of small clients.</strong> An MSP picks Hyperproof
+          because its Microsoft integrations are the best on the list. Then it finds that each client is a separate
+          organization behind an org switcher, with no shared control library and enterprise-level contract pricing.
+          Integrations were the right thing to look for. They mean little if the tenancy model makes you run twenty
+          separate compliance programs by hand. Check tenancy first, then collection, then price.
+        </p>
+
+        <h2 id="msp-proof">Where MSP Proof fits, and where it doesn't</h2>
+        <p>
+          MSP Proof is our product, so weigh this section accordingly. It is pre-launch and running as a pilot with a
+          small group of MSPs. It is not generally available, and it is not a compliance platform.
+        </p>
+        <p>
+          It does one narrow job. It connects read-only to Microsoft 365 and Entra tenants and pulls configuration
+          evidence: MFA enforcement, Conditional Access, admin role assignments, audit logging, mailbox forwarding,
+          external sharing and device compliance signals. It maps each item to CMMC Level 2 / NIST SP 800-171 Rev 2
+          requirements with the source query and collection timestamp. The output is a white-label evidence packet per
+          client, with gaps and remediation notes.
+          <mark class="verify">[VERIFY: which of these collection areas and outputs work in the pilot today vs. are planned. Confirm before publishing.]</mark>
+          <mark class="verify">[VERIFY: GCC / GCC High tenant support status.]</mark>
+        </p>
+        <p>
+          Where it doesn't fit: it covers Microsoft 365 and Entra only. There is no on-premises, AWS, network-device
+          or physical-security evidence. It does not write SSPs, manage POA&amp;Ms, or track the process and people
+          requirements that make up much of Level 2. You would still need one of the platforms above, or a
+          well-kept spreadsheet, for the program itself. It has not yet been through enough assessments to claim
+          assessor acceptance. The pilot exists to find out which evidence formats C3PAOs and consultants accept.
+        </p>
+        <p>
+          Where it might fit: an MSP running CMMC for ten or more Microsoft 365 clients whose program platform
+          already works, but whose staff still collect tenant evidence by screenshot. That's the gap we're testing.
+        </p>
+
+        <h2 id="evaluate">What to ask any vendor before you sign</h2>
+        <ul>
+          <li>Show me three client orgs from one login, with my staff and each client's staff in separate roles.</li>
+          <li>Which evidence do you collect by API, from which systems, and does that include GCC High tenants?</li>
+          <li>What does each exported evidence item carry: source, timestamp, collector identity, hash?</li>
+          <li>Can I document my shared ESP services once and reference them from every client's SSP?</li>
+          <li>What is partner pricing at 10, 25 and 50 clients, in writing?</li>
+          <li>What does an assessor see, and can they work in the platform or only receive an export?</li>
+        </ul>
+
+        <h2 id="faq">Frequently asked questions</h2>
+        {faqs.map((f) => (
+          <section class="faq">
+            <h3>{f.q}</h3>
+            <p>{f.a}</p>
+          </section>
+        ))}
+
+        <aside class="cta" id="pilot">
+          <h2>For MSPs running 10+ CMMC clients</h2>
+          <p>
+            We're working with a small group of MSPs to test Microsoft 365 and Entra evidence collection against real
+            assessor review. If you manage ten or more defense contractor tenants and want to shape what the evidence
+            packet looks like, apply to the pilot.
+          </p>
+          <a href="/#pilot-form" class="cta-button">Apply to the MSP pilot</a>
+        </aside>
+
+        <h2 id="sources">Sources</h2>
+        <p class="meta">Vendor claims are the vendors' own statements unless noted. All pages accessed September 22, 2026.</p>
+        <ul class="sources">
+          <li>Rule and status: <a href="https://www.govinfo.gov/content/pkg/FR-2025-09-10/html/2025-17359.htm" rel="nofollow">DFARS final rule, Federal Register (Sept 10, 2025)</a>; <a href="https://www.ecfr.gov/current/title-32/part-170/section-170.19" rel="nofollow">32 CFR 170.19</a>; <a href="https://www.war.gov/News/Releases/Release/Article/4542329/forging-the-arsenal-of-freedom-department-of-war-suspends-cmmc-phase-ii-require/" rel="nofollow">DoW release suspending Phase II (July 2026)</a>; <a href="https://www.crowell.com/en/insights/client-alerts/department-of-war-immediately-suspends-cmmc-phase-ii-requirements-launches-60-day-reform-review" rel="nofollow">Crowell &amp; Moring summary</a>; <a href="https://www.insidegovernmentcontracts.com/2026/09/cmmc-reform-task-force-updates-september-2026/" rel="nofollow">Covington, task force update (Sept 2026)</a></li>
+          <li>IntelliGRC: <a href="https://intelligrc.com/" rel="nofollow">homepage</a>; <a href="https://www.prnewswire.com/news-releases/intelligrc-raises-3-5m-seed-round-to-scale-provider-centric-cyber-compliance-302702993.html" rel="nofollow">seed round release</a>; <a href="https://www.capterra.com/p/10014240/IntelliGRC/" rel="nofollow">Capterra listing</a> (third-party price)</li>
+          <li>Cyturus: <a href="https://www.cyturus.com/" rel="nofollow">homepage</a>; <a href="https://www.cyturus.com/rpo-partner-program" rel="nofollow">RPO partner program</a></li>
+          <li>SMPL-C: <a href="https://www.smpl-c.com/managed-service-providers" rel="nofollow">MSP page</a>; <a href="https://www.smpl-c.com/pricing" rel="nofollow">pricing</a></li>
+          <li>FutureFeed: <a href="https://futurefeed.co/pricing/" rel="nofollow">pricing</a>; <a href="https://futurefeed.co/partners/" rel="nofollow">partners</a>; <a href="https://futurefeed.co/cmmc-provider-fast-track-program/" rel="nofollow">Provider Fast-Track</a>; <a href="https://support.futurefeed.co/knowledge-base/using-futurefeed-during-a-cmmc-assessment-and-evidence-export-guidance" rel="nofollow">assessment and evidence export guidance</a>; <a href="https://futurefeed.co/fedramp/" rel="nofollow">FedRAMP page</a></li>
+          <li>Paramify: <a href="https://www.paramify.com/pricing" rel="nofollow">pricing</a>; <a href="https://www.paramify.com/framework/cmmc" rel="nofollow">CMMC page</a>; <a href="https://www.paramify.com/faq" rel="nofollow">FAQ</a></li>
+          <li>PreVeil: <a href="https://www.preveil.com/compliance-package/" rel="nofollow">compliance package</a>; <a href="https://www.preveil.com/preveil-pass/" rel="nofollow">PreVeil Pass</a>; <a href="https://www.preveil.com/new-pricing-page/" rel="nofollow">pricing</a>; <a href="https://www.preveil.com/grc/" rel="nofollow">GRC add-on</a></li>
+          <li>Hyperproof: <a href="https://hyperproof.io/product/cmmc/" rel="nofollow">CMMC product page</a>; <a href="https://help.hyperproof.app/en/articles/14303860-switching-organizations" rel="nofollow">switching organizations</a>; <a href="https://hyperproof.io/press/" rel="nofollow">press</a>; <a href="https://www.vendr.com/marketplace/hyperproof" rel="nofollow">Vendr</a> (buyer-reported pricing)</li>
+        </ul>
+
+        <nav class="related" aria-label="Related">
+          <a href="/">MSP Proof: Microsoft 365 evidence collection for CMMC</a>
+          <a href="/#collects">What MSP Proof collects from a tenant</a>
+        </nav>
+      </article>
+    </main>
+
+    <footer class="border-t border-border">
+      <div class="mx-auto max-w-3xl px-4 py-8 text-xs text-muted-foreground sm:px-6">
+        MSP Proof prepares evidence. Certification is granted by authorized C3PAOs and DIBCAC, not by software.
+      </div>
+    </footer>
+  </body>
+</html>
+
+<style>
+  .guide { margin-top: 1.25rem; line-height: 1.7; }
+  .guide h1 { font-size: clamp(1.75rem, 4vw, 2.5rem); line-height: 1.15; font-weight: 600; letter-spacing: -0.01em; color: var(--color-navy); }
+  .guide h2 { margin-top: 2.75rem; font-size: 1.5rem; line-height: 1.25; font-weight: 600; color: var(--color-navy); }
+  .guide h3 { margin-top: 1.75rem; font-size: 1.125rem; font-weight: 600; color: var(--color-navy); }
+  .guide p, .guide ul { margin-top: 1rem; }
+  .guide ul { padding-left: 1.25rem; list-style: disc; }
+  .guide li + li { margin-top: 0.4rem; }
+  .guide a { color: var(--color-ring); text-decoration: underline; text-underline-offset: 2px; }
+  .guide .meta { font-size: 0.8125rem; color: var(--color-muted-foreground); }
+  .guide .lede { font-size: 1.125rem; }
+  .table-wrap { margin-top: 1.25rem; overflow-x: auto; border: 1px solid var(--color-border); border-radius: var(--radius); }
+  .table-wrap table { width: 100%; min-width: 640px; border-collapse: collapse; font-size: 0.8125rem; line-height: 1.45; }
+  .table-wrap th, .table-wrap td { padding: 0.6rem 0.75rem; text-align: left; vertical-align: top; border-bottom: 1px solid var(--color-border); }
+  .table-wrap thead th { background: var(--color-secondary); font-weight: 600; }
+  .table-wrap tbody th { font-weight: 600; color: var(--color-navy); white-space: nowrap; }
+  .table-wrap tr:last-child > * { border-bottom: 0; }
+  .verify { display: block; margin-top: 0.75rem; padding: 0.25rem 0.5rem; background: var(--color-warning); color: var(--color-warning-foreground); font-size: 0.8125rem; font-weight: 600; }
+  .cta { margin-top: 3rem; padding: 1.5rem; border-radius: var(--radius); background: var(--color-secondary); }
+  .cta h2 { margin-top: 0; }
+  .guide .cta-button { display: inline-block; margin-top: 1rem; padding: 0.6rem 1rem; border-radius: calc(var(--radius) - 2px); background: var(--color-navy); color: var(--color-navy-foreground); font-weight: 500; text-decoration: none; }
+  .sources { font-size: 0.8125rem; }
+  .related { margin-top: 2.5rem; display: flex; flex-direction: column; gap: 0.5rem; padding-top: 1.5rem; border-top: 1px solid var(--color-border); }
+</style>

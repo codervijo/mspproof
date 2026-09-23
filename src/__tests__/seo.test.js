@@ -42,3 +42,17 @@ describe('SEO baseline (src/pages/index.astro)', () => {
     expect(html).toMatch(/"@type":\s*"WebSite"/);
   });
 });
+
+// Any page with an unresolved [VERIFY] marker must render noindex and stay
+// out of the sitemap until the claim is checked.
+describe('[VERIFY] markers gate indexing', () => {
+  const guide = 'src/pages/guides/best-cmmc-compliance-software/index.astro';
+  const src = readFileSync(join(process.cwd(), guide), 'utf8');
+  const config = readFileSync(join(process.cwd(), 'astro.config.mjs'), 'utf8');
+
+  it('noindex + sitemap exclusion while [VERIFY] remains', () => {
+    if (!src.includes('[VERIFY')) return;
+    expect(src).toMatch(/const verifyPending = true;/);
+    expect(config).toContain('/guides/best-cmmc-compliance-software/');
+  });
+});
