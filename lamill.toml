@@ -31,12 +31,47 @@ task = "Check SEO: GSC indexation + coverage (revisit ~2026-06-22)"
 [[todo]]
 status = "open"
 priority = "medium"
-task = "Verify GA4 is receiving data (check Realtime after first traffic)"
+task = "Verify GA4 is receiving data: set PUBLIC_GA_ID in Cloudflare env (Analytics.astro renders nothing without it), redeploy, check Realtime"
 
 [[todo]]
 status = "done"
 priority = "low"
 task = "Confirm GSC verification + sitemap submitted (re-run deploy if it timed out)"
+
+[[todo]]
+status = "open"
+priority = "high"
+task = "Pilot form (LandingPage.tsx LeadForm onSubmit) sends nothing: preventDefault + setSubmitted only, shows 'Application received'. Wire to a real endpoint/inbox; homepage + guide CTAs all land here"
+
+[[todo]]
+status = "open"
+priority = "high"
+task = "Footer Privacy / Terms / Contact links are href=\"#\" placeholders (LandingPage.tsx Footer). Operator to supply pages or URLs"
+
+[[todo]]
+status = "open"
+priority = "medium"
+task = "Guide /guides/best-cmmc-compliance-software/ 'Where MSP Proof fits': replace hedged pilot-scope wording with actual status (which collection areas work today; GCC / GCC High support) once operator confirms"
+
+[[todo]]
+status = "open"
+priority = "medium"
+task = "Fill placeholder docs: docs/prd.md (problem, users, goals, v1.A), docs/CLAUDE.md (project line, deferred decisions), README.md"
+
+[[todo]]
+status = "open"
+priority = "low"
+task = "Run `make run ARGS=\"cleanup\"` from sites/portfolio/ (last unchecked post-deploy item in AI_AGENTS.md)"
+
+[[todo]]
+status = "open"
+priority = "low"
+task = "Growth reviews: homepage entry 2026-10-20, guide indexing entry 2026-10-24 (docs/growth.md)"
+
+[[todo]]
+status = "open"
+priority = "low"
+task = "sites/Makefile test target runs `pnpm test ... || true`, so failures don't fail `make test`. Workspace-level fix (outside this repo)"
 
 [content]
 # Declarative content identity for this site.
