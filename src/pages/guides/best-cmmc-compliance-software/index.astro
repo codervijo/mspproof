@@ -5,9 +5,9 @@
 // delivering CMMC across many client tenants.
 //
 // Vendor facts were checked against vendor pages on 2026-09-22 (see the
-// Sources section). While any [VERIFY] marker remains in this file the page
-// stays noindex and is excluded from the sitemap (astro.config.mjs filter).
-// Clear both together.
+// Sources section). If an unverified claim needs a marker again, add it,
+// set verifyPending = true and re-add this path to the sitemap filter in
+// astro.config.mjs; clear all three together.
 import Analytics from "../../../components/Analytics.astro";
 import "../../../styles/global.css";
 
@@ -18,7 +18,7 @@ const title = "Best CMMC Compliance Software for MSPs (2026)";
 const description =
   "Seven CMMC tools compared for MSPs running a book of defense contractor tenants: multi-client consoles, evidence collection vs. tracking, pricing, assessor fit.";
 const checked = "2026-09-22";
-const verifyPending = true;
+const verifyPending = false;
 
 const faqs = [
   {
@@ -392,13 +392,13 @@ const jsonLd = {
           small group of MSPs. It is not generally available, and it is not a compliance platform.
         </p>
         <p>
-          It does one narrow job. It connects read-only to Microsoft 365 and Entra tenants and pulls configuration
-          evidence: MFA enforcement, Conditional Access, admin role assignments, audit logging, mailbox forwarding,
-          external sharing and device compliance signals. It maps each item to CMMC Level 2 / NIST SP 800-171 Rev 2
-          requirements with the source query and collection timestamp. The output is a white-label evidence packet per
-          client, with gaps and remediation notes.
-          <mark class="verify">[VERIFY: which of these collection areas and outputs work in the pilot today vs. are planned. Confirm before publishing.]</mark>
-          <mark class="verify">[VERIFY: GCC / GCC High tenant support status.]</mark>
+          It is built around one narrow job: read-only collection of Microsoft 365 and Entra configuration evidence
+          (MFA enforcement, Conditional Access, admin role assignments, audit logging, mailbox forwarding, external
+          sharing and device compliance signals), mapped to CMMC Level 2 / NIST SP 800-171 Rev 2 requirements with the
+          source query and collection timestamp, and packaged as a white-label evidence packet per client with gaps and
+          remediation notes. That is the scope the pilot is testing, not a list of finished features. Ask us which
+          areas work today before you commit time to it. We make no claim here about GCC or GCC High tenants; if your
+          clients run in those clouds, raise it when you apply.
         </p>
         <p>
           Where it doesn't fit: it covers Microsoft 365 and Entra only. There is no on-premises, AWS, network-device

@@ -61,6 +61,7 @@ function Header() {
           <a href="#solution" className="hover:text-foreground">Solution</a>
           <a href="#workflow" className="hover:text-foreground">For MSPs</a>
           <a href="#pilot" className="hover:text-foreground">Pilot</a>
+          <a href="/guides/best-cmmc-compliance-software/" className="hover:text-foreground">Guides</a>
         </nav>
         <div className="flex items-center gap-2">
           <ThemeToggle />
@@ -713,6 +714,7 @@ function Footer() {
           </div>
         </div>
         <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-muted-foreground">
+          <a href="/guides/best-cmmc-compliance-software/" className="hover:text-foreground">CMMC compliance software for MSPs</a>
           <a href="#" className="hover:text-foreground">Privacy</a>
           <a href="#" className="hover:text-foreground">Terms</a>
           <a href="#" className="hover:text-foreground">Contact</a>

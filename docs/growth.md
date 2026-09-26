@@ -64,3 +64,12 @@ https://search.google.com/search-console directly.
 - **Action:** project scaffolded via `portfolio new bootstrap`; first deploy pending. After deploy: verify in GSC as `sc-domain:mspproof.com` and submit the sitemap.
 - **Result:** Reviewed 2026-09-22 (late). Homepage "Submitted and indexed" since 2026-06-12 crawl. GSC 28d to 2026-09-22: 23 impressions, 0 clicks, avg position 8.3. Sitemap lists 1 URL.
 - **Learning:** GSC can't test the hypothesis (partner-led MSP growth) — it only shows search visibility, and a one-page site has almost none to show. Search-side next step is more indexable pages (first: `/guides/best-cmmc-compliance-software/`, currently noindex pending [VERIFY]). Status stays active; re-review 2026-10-20.
+
+## 2026-09-26 — index the CMMC compliance software roundup
+- **Status:** active
+- **Hypothesis:** An MSP-angled vendor roundup can earn impressions for "cmmc compliance software" queries that the one-page site can't reach.
+- **KPI:** GSC impressions / clicks for `/guides/best-cmmc-compliance-software/`; site indexed-page count
+- **Baseline:** page 0 impressions (noindex until today). Site: 23 impressions, 0 clicks, avg position 8.3 (28d to 2026-09-22, from the entry above).
+- **Action:** cleared both MSP Proof [VERIFY] markers by rewriting the section as the pilot's intended scope (not claimed features) and stating no GCC/GCC High claim; removed noindex; added page to sitemap.
+- **Result:** TBD — review 2026-10-24
+- **Learning:** TBD

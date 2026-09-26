@@ -55,4 +55,16 @@ describe('[VERIFY] markers gate indexing', () => {
     expect(src).toMatch(/const verifyPending = true;/);
     expect(config).toContain('/guides/best-cmmc-compliance-software/');
   });
+
+  it('homepage links to the guide once indexable', () => {
+    if (src.includes('[VERIFY')) return;
+    const landing = readFileSync(join(process.cwd(), 'src/components/LandingPage.tsx'), 'utf8');
+    expect(landing).toContain('href="/guides/best-cmmc-compliance-software/"');
+  });
+
+  it('indexable + in sitemap once [VERIFY] is cleared', () => {
+    if (src.includes('[VERIFY')) return;
+    expect(src).toMatch(/const verifyPending = false;/);
+    expect(config).not.toContain("'/guides/best-cmmc-compliance-software/'");
+  });
 });

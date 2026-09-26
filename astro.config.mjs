@@ -10,11 +10,9 @@ export default defineConfig({
   // canonical must end in a slash (CHECK_161).
   trailingSlash: 'always',
   integrations: [
-    sitemap({
-      // Pages kept out of the sitemap while they carry unresolved [VERIFY]
-      // markers (they also render noindex). Remove an entry once cleared.
-      filter: (page) => !page.includes('/guides/best-cmmc-compliance-software/'),
-    }),
+    // A page with unresolved [VERIFY] markers renders noindex and must be
+    // excluded here too, e.g. sitemap({ filter: (page) => !page.includes('/x/') }).
+    sitemap(),
     react(),
   ],
   output: 'static',
