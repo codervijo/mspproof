@@ -62,5 +62,5 @@ https://search.google.com/search-console directly.
 - **KPI:** any GSC traffic — clicks, impressions, indexed-page count
 - **Baseline:** 0 clicks / 0 impressions (just deployed)
 - **Action:** project scaffolded via `portfolio new bootstrap`; first deploy pending. After deploy: verify in GSC as `sc-domain:mspproof.com` and submit the sitemap.
-- **Result:** TBD — review 2026-07-06
-- **Learning:** TBD
+- **Result:** Reviewed 2026-09-22 (late). Homepage "Submitted and indexed" since 2026-06-12 crawl. GSC 28d to 2026-09-22: 23 impressions, 0 clicks, avg position 8.3. Sitemap lists 1 URL.
+- **Learning:** GSC can't test the hypothesis (partner-led MSP growth) — it only shows search visibility, and a one-page site has almost none to show. Search-side next step is more indexable pages (first: `/guides/best-cmmc-compliance-software/`, currently noindex pending [VERIFY]). Status stays active; re-review 2026-10-20.

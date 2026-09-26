@@ -87,8 +87,8 @@ docker exec -w /usr/src/app <name> make test proj=mspproof.com
   POSTs to the CF Pages API with `build_command="pnpm run build"` set explicitly
   (avoids the bun-detection trap kwizicle.com hit). Idempotent; safe to re-run.
 - **Vite version:** must be ≥ 6.0.0 — Wrangler's Vite integration rejects Vite 5.
-- **Env vars:** set `VITE_*` vars (e.g. `VITE_GA_ID`) in the Cloudflare Workers project's environment-variable settings — they're inlined at build time.
-- **Live URL:** https://mspproof.com/  *(update once first deploy succeeds)*
+- **Env vars:** set `PUBLIC_*` vars (e.g. `PUBLIC_GA_ID`, read by `src/components/Analytics.astro`) in the Cloudflare project's environment-variable settings — Astro inlines them at build time. Unset → no analytics tag rendered.
+- **Live URL:** https://mspproof.com/  *(confirmed live 2026-09-22)*
 - **Legacy:** if a `vercel.json` or `.vercelignore` is present from a Lovable export, it's inert on Cloudflare and safe to delete.
 
 ## Content strategy
@@ -99,9 +99,9 @@ Target high-intent CMMC and Microsoft 365 evidence searches with pages like “C
 
 ### Post-deploy checklist (do these once after the first successful deploy)
 
-- [ ] Verify in **Google Search Console** at https://search.google.com/search-console — add as `sc-domain:mspproof.com` property; verify via DNS TXT record. Until this is done, no SEO traffic data is observable for this site (and the workspace-wide `30 commercial sites with traffic` goal can't credit it).
-- [ ] Submit the sitemap (`https://mspproof.com/sitemap.xml`) inside GSC.
-- [ ] Update the **Live URL** above with the actual deploy URL.
+- [x] Verify in **Google Search Console** at https://search.google.com/search-console — add as `sc-domain:mspproof.com` property; verify via DNS TXT record. Until this is done, no SEO traffic data is observable for this site (and the workspace-wide `30 commercial sites with traffic` goal can't credit it).
+- [x] Submit the sitemap (`https://mspproof.com/sitemap-index.xml` — `@astrojs/sitemap` emits `-index`) inside GSC.
+- [x] Update the **Live URL** above with the actual deploy URL.
 - [ ] Run `make run ARGS="cleanup"` from `sites/portfolio/` so `data/portfolio.json` reflects the new project's state (and `project status mspproof.com` resolves cleanly).
 
 ## How to run

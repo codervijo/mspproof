@@ -1,9 +1,13 @@
 ---
 // src/pages/index.astro
 import LandingPage from "../components/LandingPage.tsx";
+import Analytics from "../components/Analytics.astro";
 import "../styles/global.css";
 
 const site = "https://mspproof.com";
+// Trailing slash matches the served URL, the sitemap <loc> and the JSON-LD url
+// (trailingSlash: 'always' in astro.config.mjs; CHECK_092 / CHECK_161).
+const canonical = `${site}/`;
 const title = "MSP Proof — CMMC evidence automation for MSPs";
 const description =
   "MSP Proof turns Microsoft 365 and Entra tenant settings into CMMC-ready evidence reports MSPs can white-label for defense contractor clients.";
@@ -17,14 +21,15 @@ const ogDescription =
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
-    <link rel="canonical" href={site} />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href={canonical} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={ogDescription} />
-    <meta property="og:url" content={site} />
+    <meta property="og:url" content={canonical} />
     <meta property="og:site_name" content="MSP Proof" />
 
     <!-- Twitter card -->
@@ -68,6 +73,7 @@ const ogDescription =
         } catch (e) {}
       })();
     </script>
+    <Analytics />
   </head>
   <body>
     <LandingPage client:load />

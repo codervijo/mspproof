@@ -1,0 +1,17 @@
+---
+// src/components/Analytics.astro
+// GA4 is injected only when PUBLIC_GA_ID is set (Cloudflare env var, inlined
+// at build). Unset → renders nothing.
+const GA_ID = import.meta.env.PUBLIC_GA_ID;
+---
+{GA_ID && (
+  <>
+    <script async src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`} />
+    <script is:inline define:vars={{ GA_ID }}>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag('js', new Date());
+      gtag('config', GA_ID);
+    </script>
+  </>
+)}

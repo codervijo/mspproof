@@ -8,6 +8,7 @@
 // Sources section). While any [VERIFY] marker remains in this file the page
 // stays noindex and is excluded from the sitemap (astro.config.mjs filter).
 // Clear both together.
+import Analytics from "../../../components/Analytics.astro";
 import "../../../styles/global.css";
 
 const site = "https://mspproof.com";
@@ -109,6 +110,7 @@ const jsonLd = {
         } catch (e) {}
       })();
     </script>
+    <Analytics />
   </head>
   <body class="min-h-screen bg-background text-foreground antialiased">
     <header class="border-b border-border">

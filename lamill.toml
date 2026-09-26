@@ -24,7 +24,7 @@ status = "done"
 task = "Fill in [content] block: tone"
 
 [[todo]]
-status = "open"
+status = "done"
 priority = "medium"
 task = "Check SEO: GSC indexation + coverage (revisit ~2026-06-22)"
 
@@ -34,7 +34,7 @@ priority = "medium"
 task = "Verify GA4 is receiving data (check Realtime after first traffic)"
 
 [[todo]]
-status = "open"
+status = "done"
 priority = "low"
 task = "Confirm GSC verification + sitemap submitted (re-run deploy if it timed out)"
 

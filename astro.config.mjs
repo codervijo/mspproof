@@ -6,6 +6,9 @@ import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
   site: 'https://mspproof.com',
+  // Directory format serves /<page>/ and the sitemap lists /<page>/, so every
+  // canonical must end in a slash (CHECK_161).
+  trailingSlash: 'always',
   integrations: [
     sitemap({
       // Pages kept out of the sitemap while they carry unresolved [VERIFY]
