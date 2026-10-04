@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, type FormEvent } from "react";
 import {
   ShieldCheck,
   FileCheck2,
@@ -571,8 +571,48 @@ function Pilot() {
   );
 }
 
+// Web3Forms access key (public by design). Set PUBLIC_WEB3FORMS_KEY in the
+// Cloudflare env; Astro inlines it at build. Unset → submit shows an error
+// rather than a fake "received".
+const WEB3FORMS_ACCESS_KEY = import.meta.env.PUBLIC_WEB3FORMS_KEY as string | undefined;
+
 function LeadForm() {
-  const [submitted, setSubmitted] = useState(false);
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [error, setError] = useState("");
+  const submitted = status === "success";
+
+  async function onSubmit(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    if (!WEB3FORMS_ACCESS_KEY) {
+      setStatus("error");
+      setError("Applications can't be submitted right now. Please try again later.");
+      return;
+    }
+    const formData = new FormData(e.currentTarget);
+    formData.append("access_key", WEB3FORMS_ACCESS_KEY);
+    formData.append("subject", "New MSP Proof pilot application");
+    formData.append("from_name", "MSP Proof pilot form");
+
+    setStatus("loading");
+    setError("");
+    try {
+      const res = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: formData,
+      });
+      const data = await res.json();
+      if (data.success) {
+        setStatus("success");
+      } else {
+        setStatus("error");
+        setError(data.message || "Something went wrong. Please try again.");
+      }
+    } catch {
+      setStatus("error");
+      setError("Network error. Please try again in a moment.");
+    }
+  }
+
   return (
     <section id="pilot-form" className="border-b border-border bg-secondary/40">
       <div className="mx-auto grid max-w-7xl gap-12 px-6 py-20 md:py-24 lg:grid-cols-5">
@@ -606,12 +646,11 @@ function LeadForm() {
             </div>
           ) : (
             <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                setSubmitted(true);
-              }}
+              onSubmit={onSubmit}
               className="rounded-xl border border-border bg-card p-6 md:p-8"
             >
+              {/* honeypot */}
+              <input type="checkbox" name="botcheck" className="hidden" tabIndex={-1} autoComplete="off" />
               <div className="grid gap-5 sm:grid-cols-2">
                 <Field label="Name" name="name" placeholder="Jordan Smith" required />
                 <Field label="Company" name="company" placeholder="Northstar IT Partners" required />
@@ -654,11 +693,17 @@ function LeadForm() {
                 </p>
                 <button
                   type="submit"
-                  className="inline-flex items-center gap-2 rounded-md bg-navy px-5 py-2.5 text-sm font-medium text-navy-foreground hover:opacity-95"
+                  disabled={status === "loading"}
+                  className="inline-flex items-center gap-2 rounded-md bg-navy px-5 py-2.5 text-sm font-medium text-navy-foreground hover:opacity-95 disabled:opacity-60"
                 >
-                  Submit application <ArrowRight className="h-4 w-4" />
+                  {status === "loading" ? "Submitting…" : "Submit application"} <ArrowRight className="h-4 w-4" />
                 </button>
               </div>
+              {status === "error" && (
+                <p role="alert" className="mt-4 text-sm text-destructive">
+                  {error}
+                </p>
+              )}
             </form>
           )}
         </div>

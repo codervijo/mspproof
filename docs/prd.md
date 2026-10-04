@@ -107,5 +107,7 @@ Keyword figures above: Ahrefs, US, pulled 2026-09-22 (from the operator's
   `LandingPage.tsx` only sets client-side state (see `src/lib/server-todo.md`);
   any pilot application submitted to date was lost. Fold into v1.C, or ship
   ahead of it as the first v1.B item?
+  **Answered 2026-10-03:** shipped ahead of v1.C — Web3Forms, key in
+  `PUBLIC_WEB3FORMS_KEY`. v1.C still owns gated-asset capture.
 - 2026-10-03 — Distribution is the first job, not in any phase: outbound to the
   Cyber AB RPO directory, MSP communities, r/CMMC. Needs an owner outside the PRD.

@@ -27,7 +27,6 @@ service.
 
 ## Lead form
 
-`LandingPage.tsx` (`LeadForm`) currently handles submit purely client-side
-(sets a "submitted" state, no network call) — same behavior as the source.
-TODO: wire to a real endpoint (Astro API route, form service, or external
-CRM) when the pilot form should actually deliver applications.
+Done 2026-10-03: `LeadForm` posts to Web3Forms (same pattern as
+threadradar.xyz), key from `PUBLIC_WEB3FORMS_KEY`. Unset key → visible error,
+never a fake "received". Regression test: `src/__tests__/lead-form.test.js`.
