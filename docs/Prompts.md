@@ -20,3 +20,7 @@ to surface "last AI prompt" per project. Keep entries append-only.
 ## 2026-09-26 — clear [VERIFY] on /guides/best-cmmc-compliance-software/
 
 > Remove the [VERIFY] markers without making up facts. Pilot feature status and GCC High support aren't recorded anywhere, so the MSP Proof section was reworded to describe the pilot's scope rather than working features, with no GCC/GCC High claim. Page now indexable and in the sitemap; test added for the cleared state.
+
+## 2026-10-03 — v1–v3 roadmap into docs/prd.md
+
+> Operator strategy brief (MSP wedge: outbound gets MSPs, content gets contractors; trust gates → Wave 1 → contractor cluster → control-evidence pages) placed into the PRD as v1 (trust + conversion), v2 (contractor cluster), v3 (product-evidence moat), each with a .A planning phase. Flagged: brief's Phase 2 date conflicts with the guide's sourced 2026-07-13 suspension; 431/80,000 stat unsourced; gated assets need a capture backend; packet/control pages need real scanner output.
