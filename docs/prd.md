@@ -87,6 +87,9 @@ Keyword figures above: Ahrefs, US, pulled 2026-09-22 (from the operator's
   ~2026-11-10; the live guide (sourced) says DoD suspended Phase 2 on
   2026-07-13 pending the Reform Task Force review. v1.D page must reflect
   current status at publish time.
+  **Answered 2026-10-03:** suspension still in force. Task Force report
+  delivered to DoW CIO ~2026-09-11, not published; Phase 1 obligations
+  unchanged. Guide's status section still accurate. v1.D = "Phase 2 status".
 - 2026-10-03 — "~431 orgs certified vs ~80,000 needing Level 2" (brief, citing
   Oct 2025 CyberAB town hall) — unsourced in repo; do not publish without a
   citeable source.
@@ -96,6 +99,13 @@ Keyword figures above: Ahrefs, US, pulled 2026-09-22 (from the operator's
 - 2026-10-03 — CertHorizon: separate property or shared content spine? (v1.A)
 - 2026-10-03 — FutureFeed: partner/MSP-oriented → nearest competitor? Check
   before guide wording review closes.
+  **Answered 2026-10-03:** yes. Partner program targets 10+ client
+  relationships; 2024 feature sheet lists "Multi-Tenant" + partner-branded
+  dashboard. Nearest competitor. Guide corrected (commit 5221fe8).
 - 2026-10-03 — r/CMMC: does it tolerate vendor presence?
+- 2026-10-03 — **Pilot form delivers nothing.** `LeadForm` in
+  `LandingPage.tsx` only sets client-side state (see `src/lib/server-todo.md`);
+  any pilot application submitted to date was lost. Fold into v1.C, or ship
+  ahead of it as the first v1.B item?
 - 2026-10-03 — Distribution is the first job, not in any phase: outbound to the
   Cyber AB RPO directory, MSP communities, r/CMMC. Needs an owner outside the PRD.
