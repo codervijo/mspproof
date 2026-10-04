@@ -25,7 +25,6 @@ task = "Fill in [content] block: tone"
 
 [[todo]]
 status = "done"
-priority = "medium"
 task = "Check SEO: GSC indexation + coverage (revisit ~2026-06-22)"
 
 [[todo]]
@@ -35,7 +34,6 @@ task = "Verify GA4 is receiving data: set PUBLIC_GA_ID in Cloudflare env (Analyt
 
 [[todo]]
 status = "done"
-priority = "low"
 task = "Confirm GSC verification + sitemap submitted (re-run deploy if it timed out)"
 
 [[todo]]
@@ -61,7 +59,7 @@ task = "Fill placeholder docs: docs/prd.md (problem, users, goals, v1.A), docs/C
 [[todo]]
 status = "open"
 priority = "low"
-task = "Run `make run ARGS=\"cleanup\"` from sites/portfolio/ (last unchecked post-deploy item in AI_AGENTS.md)"
+task = "Refresh data/portfolio.json: AI_AGENTS.md says `make run ARGS=\"cleanup\"` but the portfolio CLI has no `cleanup` command; likely `fleet sync`. Confirm, run, then fix the AI_AGENTS.md checklist line"
 
 [[todo]]
 status = "open"
@@ -72,6 +70,36 @@ task = "Growth reviews: homepage entry 2026-10-20, guide indexing entry 2026-10-
 status = "open"
 priority = "low"
 task = "sites/Makefile test target runs `pnpm test ... || true`, so failures don't fail `make test`. Workspace-level fix (outside this repo)"
+
+[[todo]]
+status = "open"
+priority = "medium"
+task = "Operator review of vendor wording on /guides/best-cmmc-compliance-software/ (now live). Includes the FutureFeed 20-client $43,920 list-price arithmetic: keep or cut"
+
+[[todo]]
+status = "open"
+priority = "medium"
+task = "Refresh guide vendor facts after the CMMC Reform Task Force report is published (Phase 2 status section) and on each pricing change; page says 'checked September 22, 2026'"
+
+[[todo]]
+status = "open"
+priority = "low"
+task = "Add og:image (1200x630) and wire og:image + twitter:image on all pages (CHECK_076)"
+
+[[todo]]
+status = "open"
+priority = "low"
+task = "Rename GitHub repo mspproof -> mspproof.com and update origin (CHECK_040)"
+
+[[todo]]
+status = "open"
+priority = "low"
+task = "Resolve deploy drift (CHECK_143): lamill.toml [deploy] platform = cf-pages but wrangler.jsonc is a Workers static-assets config. Confirm actual CF product and align"
+
+[[todo]]
+status = "open"
+priority = "low"
+task = "Portfolio-side (outside this repo): commit BUG-091 entry in portfolio/docs/bugs.md (scaffold jsdom config, 17 sites); CHECK_080 only scans index.astro so component-based GA4 reads as missing"
 
 [content]
 # Declarative content identity for this site.
