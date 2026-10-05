@@ -96,6 +96,14 @@ Keyword figures above: Ahrefs, US, pulled 2026-09-22 (from the operator's
 - 2026-10-03 — Named entity vs faceless? Gates v1.B. (v1.A)
 - 2026-10-03 — Does the scanner produce real Graph output today? Gates the v1.D
   sample packet and all of v3.C. (v1.A)
+  **Answered 2026-10-04:** no — scanner doesn't exist yet. Consequences:
+  v1.D sample packet and all of v3.C blocked until it does; v1.B security
+  page can only state *planned* Graph scopes/data handling; homepage copy
+  that presents a working product ("LIVE SCAN", "connects to Microsoft 365,
+  pulls…", "12 tenants · last sync 2 min ago", "sample report on call #1")
+  must be relabeled as preview / pilot intent (v1.B).
+  2026-10-04: homepage relabeled ahead of the rest of v1.B; guarded by
+  `src/__tests__/homepage-claims.test.js`.
 - 2026-10-03 — CertHorizon: separate property or shared content spine? (v1.A)
   2026-10-04: CertHorizon is now pqhorizon.com (live) — a post-quantum crypto
   readiness scanner sold to in-house CISOs at 50–500-person companies. Overlap

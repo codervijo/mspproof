@@ -69,7 +69,7 @@ function Header() {
             href="#sample"
             className="hidden rounded-md border border-border px-3 py-1.5 text-sm font-medium text-foreground hover:bg-secondary sm:inline-flex"
           >
-            View sample report
+            See the product preview
           </a>
           <a
             href="#pilot-form"
@@ -124,15 +124,15 @@ function Hero() {
         <div>
           <div className="inline-flex items-center gap-2 rounded-full border border-border bg-secondary px-3 py-1 text-xs font-medium text-muted-foreground">
             <span className="h-1.5 w-1.5 rounded-full bg-success" />
-            CMMC evidence automation for MSPs
+            In development · MSP pilot open
           </div>
           <h1 className="mt-5 text-4xl font-semibold leading-[1.1] tracking-tight text-navy md:text-5xl lg:text-6xl">
-            CMMC evidence reports from Microsoft 365 in hours, not weeks.
+            CMMC evidence reports from Microsoft 365, built for MSPs.
           </h1>
           <p className="mt-6 max-w-xl text-base leading-relaxed text-muted-foreground md:text-lg">
-            MSP Proof scans Microsoft 365 and Entra configurations, maps findings to CMMC / NIST
-            800-171 evidence needs, and generates client-ready assessment packets MSPs can
-            white-label.
+            MSP Proof is being built to scan Microsoft 365 and Entra configurations, map findings to
+            CMMC / NIST 800-171 evidence needs, and generate client-ready assessment packets MSPs can
+            white-label. We're shaping it with a small group of pilot MSPs.
           </p>
           <div className="mt-8 flex flex-wrap items-center gap-3">
             <a
@@ -145,13 +145,13 @@ function Hero() {
               href="#sample"
               className="inline-flex items-center gap-2 rounded-md border border-border bg-background px-5 py-3 text-sm font-medium text-foreground hover:bg-secondary"
             >
-              View sample report
+              See the product preview
             </a>
           </div>
           <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2 text-xs text-muted-foreground">
-            <span className="inline-flex items-center gap-1.5"><Lock className="h-3.5 w-3.5" /> Read-only Microsoft Graph access</span>
+            <span className="inline-flex items-center gap-1.5"><Lock className="h-3.5 w-3.5" /> Read-only Microsoft Graph access by design</span>
             <span className="inline-flex items-center gap-1.5"><FileCheck2 className="h-3.5 w-3.5" /> NIST 800-171 control mapping</span>
-            <span className="inline-flex items-center gap-1.5"><Building2 className="h-3.5 w-3.5" /> Multi-tenant by default</span>
+            <span className="inline-flex items-center gap-1.5"><Building2 className="h-3.5 w-3.5" /> Multi-tenant by design</span>
           </div>
         </div>
         <div className="lg:pl-6">
@@ -172,9 +172,9 @@ function HeroReportCard() {
             <span className="h-2 w-2 rounded-full bg-border" />
             <span className="h-2 w-2 rounded-full bg-border" />
           </div>
-          <span className="ml-2 font-mono">mspproof.app / tenants / acme-defense</span>
+          <span className="ml-2 font-mono">preview / tenants / acme-defense</span>
         </div>
-        <span className="rounded-full bg-success/10 px-2 py-0.5 text-[10px] font-medium text-success">LIVE SCAN</span>
+        <span className="rounded-full bg-secondary px-2 py-0.5 text-[10px] font-medium text-muted-foreground">PREVIEW · ILLUSTRATIVE DATA</span>
       </div>
       <div className="p-5">
         <div className="flex items-center justify-between">
@@ -296,9 +296,9 @@ function Solution() {
   return (
     <Section
       id="solution"
-      eyebrow="The solution"
+      eyebrow="What we're building"
       title="From tenant settings to a client-ready evidence packet."
-      description="MSP Proof connects to Microsoft 365, pulls configuration evidence, maps it to control requirements, and generates clean reports with gaps, source data, timestamps, and remediation notes."
+      description="MSP Proof is being built to connect to Microsoft 365, pull configuration evidence, map it to control requirements, and generate clean reports with gaps, source data, timestamps, and remediation notes. The pilot is where each step gets proven against real MSP workflows."
     >
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         {steps.map((s) => (
@@ -328,14 +328,18 @@ function DashboardPreview() {
         <div className="flex flex-wrap items-end justify-between gap-6">
           <div className="max-w-2xl">
             <div className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-              The dashboard
+              Product preview
             </div>
             <h2 className="mt-3 text-3xl font-semibold tracking-tight text-navy md:text-4xl">
               One view across every defense contractor client.
             </h2>
+            <p className="mt-4 text-base leading-relaxed text-muted-foreground">
+              A preview of the planned multi-tenant view. The tenants, scores and activity below are
+              fictional examples, not customer data.
+            </p>
           </div>
           <span className="rounded-md border border-border bg-card px-3 py-1.5 font-mono text-xs text-muted-foreground">
-            12 tenants · last sync 2 min ago
+            Illustrative data · fictional tenants
           </span>
         </div>
 
@@ -459,9 +463,9 @@ function Collects() {
   return (
     <Section
       id="collects"
-      eyebrow="What it collects"
+      eyebrow="What it will collect"
       title="Configuration evidence, pulled and timestamped."
-      description="Every artifact captures the source query, the tenant, and the time of collection — so an assessor can trace any finding back to its origin."
+      description="Planned coverage for the first release. Every artifact will capture the source query, the tenant, and the time of collection — so an assessor can trace any finding back to its origin."
     >
       <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-3">
         {items.map((x) => {
@@ -495,7 +499,7 @@ function Workflow() {
   return (
     <Section
       id="workflow"
-      eyebrow="Built for MSP workflow"
+      eyebrow="Designed for MSP workflow"
       title="Fits the way you already run your CMMC practice."
     >
       <div className="grid gap-px overflow-hidden rounded-lg border border-border bg-border md:grid-cols-2 lg:grid-cols-3">
@@ -528,8 +532,8 @@ function Trust() {
         </div>
         <div className="md:col-span-2">
           <p className="text-lg leading-relaxed text-navy-foreground/85">
-            MSP Proof does not replace assessors or consultants. It reduces evidence collection work
-            and helps MSPs prepare cleaner CMMC documentation. Certification is granted by qualified
+            MSP Proof will not replace assessors or consultants. It is being built to reduce evidence
+            collection work and help MSPs prepare cleaner CMMC documentation. Certification is granted by qualified
             third parties — our job is to make sure your clients walk in with a packet that doesn't
             waste anyone's time.
           </p>
@@ -555,9 +559,9 @@ function Pilot() {
     >
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         {[
-          { t: "Free pilot scans", d: "Run MSP Proof across your contractor tenants at no cost during the pilot." },
+          { t: "Free pilot access", d: "Use MSP Proof across your contractor tenants at no cost during the pilot." },
           { t: "Founder support", d: "Direct line to the founders. We treat your feedback as the roadmap." },
-          { t: "White-label sample reports", d: "Ship branded evidence packets to your clients from day one." },
+          { t: "Shape the packet", d: "Help define the white-label evidence packet format before launch." },
           { t: "Early partner pricing", d: "Lock in founding-partner pricing before public launch." },
         ].map((x) => (
           <div key={x.t} className="rounded-lg border border-border bg-card p-6">
@@ -625,12 +629,12 @@ function LeadForm() {
           </h2>
           <p className="mt-4 text-base leading-relaxed text-muted-foreground">
             We'll get back within two business days. If you're a fit, we'll set up a working session
-            and provision a pilot tenant connection together.
+            to map your current evidence workflow.
           </p>
           <ul className="mt-6 space-y-2 text-sm text-muted-foreground">
-            <li className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-success" /> Read-only Microsoft Graph access</li>
+            <li className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-success" /> Read-only Microsoft Graph access by design</li>
             <li className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-success" /> No long-term commitment</li>
-            <li className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-success" /> White-label sample report on call #1</li>
+            <li className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-success" /> Walk through your evidence workflow on call #1</li>
           </ul>
         </div>
         <div className="lg:col-span-3">
