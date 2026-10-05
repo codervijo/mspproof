@@ -97,6 +97,12 @@ Keyword figures above: Ahrefs, US, pulled 2026-09-22 (from the operator's
 - 2026-10-03 — Does the scanner produce real Graph output today? Gates the v1.D
   sample packet and all of v3.C. (v1.A)
 - 2026-10-03 — CertHorizon: separate property or shared content spine? (v1.A)
+  2026-10-04: CertHorizon is now pqhorizon.com (live) — a post-quantum crypto
+  readiness scanner sold to in-house CISOs at 50–500-person companies. Overlap
+  with mspproof is only its defense-subcontractor ring. Recommendation: keep
+  separate; cross-link only where a topic genuinely spans both (e.g. FIPS
+  cryptography under SC.L2-3.13.11).
+  **Answered 2026-10-04:** keep separate; cross-link only where topics span both.
 - 2026-10-03 — FutureFeed: partner/MSP-oriented → nearest competitor? Check
   before guide wording review closes.
   **Answered 2026-10-03:** yes. Partner program targets 10+ client
