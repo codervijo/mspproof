@@ -1,10 +1,10 @@
 ---
 project: mspproof.com
 prd_version: 2
-project_version: v0.A
-status: planned
+project_version: v1.A
+status: in-progress
 owner: Vijo
-last_updated: 2026-10-03
+last_updated: 2026-10-28
 ---
 
 # mspproof.com — PRD
@@ -28,6 +28,9 @@ as the tool an MSP uses to deliver CMMC across a book of client tenants.
 ## 3. Goals & non-goals
 
 **Goals:**
+- **Current priority (2026-10-28): expand the SEO impressions surface.**
+  Trust, capture and gated assets are down-funnel and wait until the
+  contractor cluster (v2) is live.
 - Win pilot usage from 5–10 CMMC-focused MSPs and validate which evidence
   outputs survive assessor or consultant review.
 - Convert accepted report formats into repeatable white-label evidence packages.
@@ -52,7 +55,7 @@ Two-level versioning convention (canonical: `sites/portfolio/AI_AGENTS.md`):
 |---|---|---|
 | v0 | scaffold | local builds, CF wrangler.jsonc + public/_headers in place, repo initialized |
 | v1 | trust + conversion | site passes a compliance buyer's sniff test (legal, security, named contact, honest preview labels); email capture works; Wave 1 pages + gated sample packet live |
-| v2 | contractor-side content cluster | Level 2 requirements hub + 5 spoke pages live, all linking up to the hub, each with an MSP-side CTA |
+| v2 | contractor-side content cluster | Level 2 requirements hub + spokes (incl. Phase 2 status page and ungated SPRS calculator) live, all linking up to the hub, each with an MSP-side CTA; roundup linked into the cluster |
 | v3 | product-evidence moat | M365 CMMC pillar, GCC High page, gated SSP/POA&M templates, one control-evidence page per control the scanner actually covers |
 
 ## 5. Phases
@@ -60,15 +63,20 @@ Two-level versioning convention (canonical: `sites/portfolio/AI_AGENTS.md`):
 Cadence rule for all content phases: 2–3 pages/week, never a bulk dump.
 Anything citing CMMC rule phases/dates is re-checked at publish time.
 
+Execution order (2026-10-28): v2 runs next, ahead of the rest of v1. v1.B
+remainder, v1.C and v1.D's sample packet are deferred as down-funnel.
+Numbering kept as-is so shipped `v1.B` commits still match their rows.
+
 | Phase | Theme | Features | Status |
 |---|---|---|---|
 | **v0.A** | scaffolded | `portfolio new bootstrap` ran; standard files written; git initialized | ✅ |
-| **v1.A** | planning lock | decide named entity vs faceless; CertHorizon separate vs shared content spine; confirm Phase 2 framing; confirm scanner/product status | planned |
-| **v1.B** | trust gates | Privacy, Terms, Contact pages (footer links are dead `#` today); security / data-handling page (Graph scopes, residency, retention, deletion); label dashboard as product preview; repoint "View sample report" off the mockup | planned — needs entity + contact, real Graph scopes + data policy |
-| **v1.C** | capture backend | email gate on CF Workers (form → storage → delivery) for gated assets | planned — needs backend choice |
-| **v1.D** | Wave 1 content | CMMC Phase 2 status page (`cmmc phase 2` 200/mo; fold in `cmmc deadline 2026`); SPRS score calculator, email-gated (`sprs score calculator` 100/mo, KD 0; reuse calcengine/washcalc pattern); sample evidence packet page, gated PDF, fictional tenant clearly labeled, by control family | planned — needs v1.C, real packet output |
-| **v2.A** | planning | lock cluster slugs, hub/spoke linking, MSP-side CTA pattern | planned |
-| **v2.B** | Wave 2 content | hub: CMMC Level 2 requirements, all 110 controls (800/mo, KD 0); spokes: CMMC self-assessment + SPRS posting (300, KD 1); CMMC scoping guide (200, KD 0); CMMC certification cost incl. C3PAO cost (350, KD 4); CMMC Level 1 vs Level 2 (200); NIST 800-171 checklist with Level 2 checklist as anchor section — not a separate page (100, KD 1) | planned |
+| **v1.A** | planning lock | decide named entity vs faceless; CertHorizon separate vs shared content spine; confirm Phase 2 framing; confirm scanner/product status | ✅ all four answered (see §6) |
+| **v1.B** | trust gates | Pilot form delivers via Web3Forms (7e734b0); homepage presents product as in development, dashboard as illustrative preview (fc301c4); Terms, Contact pages (footer links are dead `#` today) — faceless, reading site identity from the config added in v2.B; security / data-handling page (*planned* Graph scopes, residency, retention, deletion); repoint "View sample report" off the mockup | partial — form + homepage relabel shipped; rest deferred (down-funnel), needs planned Graph scopes + data policy |
+| **v1.C** | capture backend | email gate on CF Workers (form → storage → delivery) for gated assets | deferred (down-funnel) — needs backend choice |
+| **v1.D** | Wave 1 content | sample evidence packet page, gated PDF, fictional tenant clearly labeled, by control family. (Phase 2 status page and SPRS calculator moved to v2.B / v2.C, 2026-10-28) | deferred — needs v1.C, real packet output |
+| **v2.A** | planning | lock cluster slugs, hub/spoke linking, MSP-side CTA pattern; site-identity config shape (faceless now, credibility layers — named entity, About, team, credentials — addable later without rewriting pages) | planned |
+| **v2.B** | Wave 2a content | hub: CMMC Level 2 requirements, all 110 controls (800/mo, KD 0); spokes: CMMC certification cost incl. C3PAO cost (350, KD 4); CMMC self-assessment + SPRS posting (300, KD 1); CMMC Phase 2 status page (`cmmc phase 2` 200/mo; fold in `cmmc deadline 2026`); Privacy page, faceless, reading the site-identity config (pilot form already collects emails) | planned — needs v2.A |
+| **v2.C** | Wave 2b content | spokes: CMMC scoping guide (200, KD 0); CMMC Level 1 vs Level 2 (200); SPRS score calculator, ungated (`sprs score calculator` 100/mo, KD 0; reuse calcengine/washcalc pattern); NIST 800-171 checklist with Level 2 checklist as anchor section on the hub — not a separate page (100, KD 1); link `/guides/best-cmmc-compliance-software/` into the cluster | planned — needs v2.B |
 | **v3.A** | planning | inventory scanner control coverage; control-evidence page template (Graph query → artifact → what an assessor wants) | planned |
 | **v3.B** | Wave 3 content | Microsoft 365 CMMC compliance pillar (60/mo); GCC High vs commercial for CMMC; SSP and POA&M templates, gated | planned — templates need v1.C |
 | **v3.C** | control-evidence pages | one page per scanner-covered control, starting with: IA.L2-3.5.3 MFA; AU.L2-3.3.1 audit log; AC.L2-3.1.12 Conditional Access; AC.L2-3.1.3 external sharing; AC.L2-3.1.5 privileged roles / PIM; AC.L2-3.1.1 inactive / stale accounts; plus mailbox forwarding, encryption config, risky sign-ins, device compliance. Extend as coverage grows | planned — needs real scanner output |
@@ -94,6 +102,9 @@ Keyword figures above: Ahrefs, US, pulled 2026-09-22 (from the operator's
   Oct 2025 CyberAB town hall) — unsourced in repo; do not publish without a
   citeable source.
 - 2026-10-03 — Named entity vs faceless? Gates v1.B. (v1.A)
+  **Answered 2026-10-28:** faceless for now. Site identity lives in one
+  config the trust pages read, so credibility layers (named entity, About,
+  team, credentials) can be added later without rewriting pages.
 - 2026-10-03 — Does the scanner produce real Graph output today? Gates the v1.D
   sample packet and all of v3.C. (v1.A)
   **Answered 2026-10-04:** no — scanner doesn't exist yet. Consequences:
@@ -125,3 +136,7 @@ Keyword figures above: Ahrefs, US, pulled 2026-09-22 (from the operator's
   `PUBLIC_WEB3FORMS_KEY`. v1.C still owns gated-asset capture.
 - 2026-10-03 — Distribution is the first job, not in any phase: outbound to the
   Cyber AB RPO directory, MSP communities, r/CMMC. Needs an owner outside the PRD.
+- 2026-10-28 — **Priority set: expand SEO impressions surface.** v2 runs next;
+  v1.B remainder / v1.C / v1.D packet deferred as down-funnel. Basis: GSC
+  2026-09-30..10-28 — roundup earns 121 of 129 site impressions at avg position
+  68, 0 clicks; top query `cmmc compliance software` (22 imp, pos 87).

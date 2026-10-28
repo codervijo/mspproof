@@ -66,10 +66,10 @@ https://search.google.com/search-console directly.
 - **Learning:** GSC can't test the hypothesis (partner-led MSP growth) — it only shows search visibility, and a one-page site has almost none to show. Search-side next step is more indexable pages (first: `/guides/best-cmmc-compliance-software/`, currently noindex pending [VERIFY]). Status stays active; re-review 2026-10-20.
 
 ## 2026-09-26 — index the CMMC compliance software roundup
-- **Status:** active
+- **Status:** shipped
 - **Hypothesis:** An MSP-angled vendor roundup can earn impressions for "cmmc compliance software" queries that the one-page site can't reach.
 - **KPI:** GSC impressions / clicks for `/guides/best-cmmc-compliance-software/`; site indexed-page count
 - **Baseline:** page 0 impressions (noindex until today). Site: 23 impressions, 0 clicks, avg position 8.3 (28d to 2026-09-22, from the entry above).
 - **Action:** cleared both MSP Proof [VERIFY] markers by rewriting the section as the pilot's intended scope (not claimed features) and stating no GCC/GCC High claim; removed noindex; added page to sitemap.
-- **Result:** TBD — review 2026-10-24
-- **Learning:** TBD
+- **Result:** Reviewed 2026-10-28 (4d late). GSC 2026-09-30..10-28: page 121 impressions, 0 clicks, avg position 68.3; homepage 8 imp, pos 15.0. Site 129 imp vs 26 at baseline window (5×), growth starting ~2026-10-16. Top queries: `cmmc compliance software` 22 imp pos 87; `best cmmc compliance software`, `cmmc compliance solution`, `what's the best cmmc compliance software for dod contractors` 4 imp each, pos ~92. Best-ranked: `cmmc msp tool` pos 35, `cmmc compliance managed it provider` pos 45.5. 42 of 129 imp anonymized.
+- **Learning:** Hypothesis held for impressions — the page is surfacing for its head term and a long tail of "best cmmc … software/platform/tool" variants. It isn't ranking (page 7–9), so no clicks. MSP-side queries rank best, consistent with the angle. Next: contractor cluster (PRD v2) to widen surface and give the roundup internal links; track clicks in a new entry when v2.B ships.
