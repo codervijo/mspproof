@@ -74,12 +74,36 @@ Numbering kept as-is so shipped `v1.B` commits still match their rows.
 | **v1.B** | trust gates | Pilot form delivers via Web3Forms (7e734b0); homepage presents product as in development, dashboard as illustrative preview (fc301c4); Terms, Contact pages (footer links are dead `#` today) — faceless, reading site identity from the config added in v2.B; security / data-handling page (*planned* Graph scopes, residency, retention, deletion); repoint "View sample report" off the mockup | partial — form + homepage relabel shipped; rest deferred (down-funnel), needs planned Graph scopes + data policy |
 | **v1.C** | capture backend | email gate on CF Workers (form → storage → delivery) for gated assets | deferred (down-funnel) — needs backend choice |
 | **v1.D** | Wave 1 content | sample evidence packet page, gated PDF, fictional tenant clearly labeled, by control family. (Phase 2 status page and SPRS calculator moved to v2.B / v2.C, 2026-10-28) | deferred — needs v1.C, real packet output |
-| **v2.A** | planning | lock cluster slugs, hub/spoke linking, MSP-side CTA pattern; site-identity config shape (faceless now, credibility layers — named entity, About, team, credentials — addable later without rewriting pages) | planned |
+| **v2.A** | planning | lock cluster slugs, hub/spoke linking, MSP-side CTA pattern; site-identity config shape (faceless now, credibility layers — named entity, About, team, credentials — addable later without rewriting pages) | ✅ locked 2026-10-28 (decisions below the table) |
 | **v2.B** | Wave 2a content | hub: CMMC Level 2 requirements, all 110 controls (800/mo, KD 0); spokes: CMMC certification cost incl. C3PAO cost (350, KD 4); CMMC self-assessment + SPRS posting (300, KD 1); CMMC Phase 2 status page (`cmmc phase 2` 200/mo; fold in `cmmc deadline 2026`); Privacy page, faceless, reading the site-identity config (pilot form already collects emails) | planned — needs v2.A |
 | **v2.C** | Wave 2b content | spokes: CMMC scoping guide (200, KD 0); CMMC Level 1 vs Level 2 (200); SPRS score calculator, ungated (`sprs score calculator` 100/mo, KD 0; reuse calcengine/washcalc pattern); NIST 800-171 checklist with Level 2 checklist as anchor section on the hub — not a separate page (100, KD 1); link `/guides/best-cmmc-compliance-software/` into the cluster | planned — needs v2.B |
 | **v3.A** | planning | inventory scanner control coverage; control-evidence page template (Graph query → artifact → what an assessor wants) | planned |
 | **v3.B** | Wave 3 content | Microsoft 365 CMMC compliance pillar (60/mo); GCC High vs commercial for CMMC; SSP and POA&M templates, gated | planned — templates need v1.C |
 | **v3.C** | control-evidence pages | one page per scanner-covered control, starting with: IA.L2-3.5.3 MFA; AU.L2-3.3.1 audit log; AC.L2-3.1.12 Conditional Access; AC.L2-3.1.3 external sharing; AC.L2-3.1.5 privileged roles / PIM; AC.L2-3.1.1 inactive / stale accounts; plus mailbox forwarding, encryption config, risky sign-ins, device compliance. Extend as coverage grows | planned — needs real scanner output |
+
+**v2.A decisions (locked 2026-10-28):**
+
+- **URLs.** Cluster lives under `/cmmc/`: hub `/cmmc/level-2-requirements/`;
+  spokes `/cmmc/certification-cost/`, `/cmmc/self-assessment/`,
+  `/cmmc/phase-2/`, `/cmmc/scoping/`, `/cmmc/level-1-vs-level-2/`,
+  `/cmmc/sprs-score-calculator/`. Privacy at `/privacy/`. The roundup stays at
+  `/guides/best-cmmc-compliance-software/` (indexed — don't move).
+- **Linking.** Every spoke links up to the hub in its intro and in a
+  Home › CMMC › page breadcrumb (visible + BreadcrumbList JSON-LD). The hub
+  links to each spoke from its relevant section, not a link dump. Spokes
+  cross-link only where the topic connects. Hub and certification-cost page
+  link to the roundup; the roundup links back to the hub.
+- **CTA.** One shared end-of-page component, two audiences: contractors →
+  forward the page to their IT provider; MSPs → apply to the pilot
+  (`/#pilot-form`). Same honest pre-launch wording as the roundup.
+- **Site identity.** `src/lib/site.ts` holds name, URL and contact method;
+  `legalName`, `about`, `team`, `credentials` exist but stay empty and render
+  nothing until set. Organization JSON-LD and the trust pages read from it.
+- **Privacy contact.** Web3Forms form on `/privacy/` (same
+  `PUBLIC_WEB3FORMS_KEY` as the pilot form), no email alias.
+- **Shared layout.** Extract the roundup's head/header/footer/guide styles
+  into one guide layout; v2.B migrates the roundup onto it with no content
+  change and points the homepage footer's dead Privacy link at `/privacy/`.
 
 Already shipped outside this table: `/guides/best-cmmc-compliance-software/`
 (Wave 1 #1 of the 2026-10-03 plan) — live and indexed 2026-09-26; operator
