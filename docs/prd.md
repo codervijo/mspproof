@@ -43,6 +43,8 @@ as the tool an MSP uses to deliver CMMC across a book of client tenants.
 - Page targets for zero-search-volume terms (cmmc evidence collection, gcc high
   msp, Entra/Graph terms) — keep those as landing/outbound copy.
 - `what is cui` (6.2K, KD 43, $0.35 CPC) — wrong reader, no money.
+- `cui marking` (880/mo, KD 13) — too close to the `what is cui` reader; skipped
+  2026-11-07.
 
 ## 4. Versions
 
@@ -55,7 +57,7 @@ Two-level versioning convention (canonical: `sites/portfolio/AI_AGENTS.md`):
 |---|---|---|
 | v0 | scaffold | local builds, CF wrangler.jsonc + public/_headers in place, repo initialized |
 | v1 | trust + conversion | site passes a compliance buyer's sniff test (legal, security, named contact, honest preview labels); email capture works; gated sample packet live |
-| v2 | contractor-side content cluster | Level 2 requirements hub + spokes (incl. CMMC rollout-status page and ungated SPRS calculator) live, all linking up to the hub, each with an MSP-side CTA; roundup linked into the cluster |
+| v2 | contractor-side content cluster | Level 2 requirements hub + Level 1, assessment/SPRS and rules/scope spokes live (v2.B–v2.E), all linking up to the hub, each with an MSP-side CTA; roundup linked into the cluster |
 | v3 | product-evidence moat | M365 CMMC pillar, GCC High page, gated SSP/POA&M templates, one control-evidence page per control the scanner actually covers |
 
 ## 5. Phases
@@ -75,8 +77,10 @@ Numbering kept as-is so shipped `v1.B` commits still match their rows.
 | **v1.C** | capture backend | email gate on CF Workers (form → storage → delivery) for gated assets | deferred (down-funnel) — needs backend choice |
 | **v1.D** | gated sample packet | sample evidence packet page, gated PDF, fictional tenant clearly labeled, by control family. (CMMC rollout-status page and SPRS calculator moved to v2.B / v2.C, 2026-10-28) | deferred — needs v1.C, real packet output |
 | **v2.A** | planning | lock cluster slugs, hub/spoke linking, MSP-side CTA pattern; site-identity config shape (faceless now, credibility layers — named entity, About, team, credentials — addable later without rewriting pages) | ✅ locked 2026-10-28 (decisions below the table) |
-| **v2.B** | hub + first spokes | hub: CMMC Level 2 requirements, all 110 controls (800/mo, KD 0); spokes: CMMC certification cost incl. C3PAO cost (350, KD 4); CMMC self-assessment + SPRS posting (300, KD 1); CMMC rollout-status page on DoD's suspended Phase 2 (`cmmc phase 2` 200/mo; fold in `cmmc deadline 2026`); Privacy page, faceless, reading the site-identity config (pilot form already collects emails) | in progress — built 2026-10-28: `src/lib/site.ts`, `GuideLayout`, `ClusterCta`, roundup migrated (article/meta/JSON-LD unchanged), Privacy (commitments confirmed 2026-11-07, indexable), hub; certification-cost spoke 2026-11-07 (DoD RIA figures, linked from hub #assessment); self-assessment/SPRS spoke 2026-11-07 (linked from hub #assessment + cost page). Next: CMMC rollout-status spoke (`/cmmc/phase-2/`) |
-| **v2.C** | remaining spokes + calculator | spokes: CMMC scoping guide (200, KD 0); CMMC Level 1 vs Level 2 (200); SPRS score calculator, ungated (`sprs score calculator` 100/mo, KD 0; reuse calcengine/washcalc pattern); NIST 800-171 checklist with Level 2 checklist as anchor section on the hub — not a separate page (100, KD 1); link `/guides/best-cmmc-compliance-software/` into the cluster | planned — needs v2.B |
+| **v2.B** | hub + first spokes | hub: CMMC Level 2 requirements, all 110 controls (800/mo, KD 0); spokes: CMMC certification cost incl. C3PAO cost (350, KD 4); CMMC self-assessment + SPRS posting (300, KD 1); CMMC rollout-status page on DoD's suspended Phase 2 (`cmmc phase 2` 200/mo; fold in `cmmc deadline 2026`); Privacy page, faceless, reading the site-identity config (pilot form already collects emails) | in progress — built 2026-10-28: `src/lib/site.ts`, `GuideLayout`, `ClusterCta`, roundup migrated (article/meta/JSON-LD unchanged), Privacy (commitments confirmed 2026-11-07, indexable), hub; certification-cost spoke 2026-11-07 (DoD RIA figures, linked from hub #assessment); self-assessment/SPRS spoke 2026-11-07 (linked from hub #assessment + cost page). CMMC rollout-status spoke `/cmmc/phase-2/` 2026-11-07 (linked from hub #status + cost page; re-check when DoW publishes the task force report). All v2.B pages built |
+| **v2.C** | Level 1 pages + roundup back-link | CMMC Level 1 requirements / FAR 52.204-21 (`cmmc level 1 requirements` 590, KD 10; `far 52.204-21` 1600, KD 6; `cmmc level 1` 1600); CMMC Level 1 vs Level 2 (170, KD 0); Level 1 self-assessment + annual affirmation (`cmmc level 1 self assessment` 320, KD 2; `cmmc level 1 checklist` 260); NIST 800-171 / Level 2 checklist as anchor section on the hub, not a page (70, KD 3); link `/guides/best-cmmc-compliance-software/` back to the hub | planned — needs v2.B |
+| **v2.D** | assessment + SPRS pages | C3PAO: what it is, how to find one (`c3pao` 1900, KD 0; `cmmc marketplace` 170); SPRS score explained, absorbing the score calculator (`sprs score` 720, KD 0; `sprs` 3600; calculator alone 30 — no standalone page); CMMC Level 2 assessment process (`cmmc level 2 assessment guide` 590, KD 13; `how to get cmmc certified` 210); POA&M explainer (`what is a poam` 720, KD 0; `poam template` 390 — template itself stays v3.B) | planned — needs v2.C |
+| **v2.E** | rules + scope pages | DFARS 7012/7019/7020/7021 explained (`dfars 7012` 880, KD 11; `dfars 7021` 210; `dfars 7020` 140; `dfars 7019` 90); CMMC scoping guide (170, KD 3); FCI vs CUI (`what is fci` 880, KD 2; `fci vs cui` 210); NIST 800-171 Rev 2 vs Rev 3 (`nist 800 171 rev 3` 480, KD 13); NIST 800-171 vs 800-53 (210, KD 0); CMMC enclave (210, KD 0) | planned — needs v2.D |
 | **v3.A** | planning | inventory scanner control coverage; control-evidence page template (Graph query → artifact → what an assessor wants) | planned |
 | **v3.B** | M365 pillar + templates | Microsoft 365 CMMC compliance pillar (60/mo); GCC High vs commercial for CMMC; SSP and POA&M templates, gated | planned — templates need v1.C |
 | **v3.C** | control-evidence pages | one page per scanner-covered control, starting with: IA.L2-3.5.3 MFA; AU.L2-3.3.1 audit log; AC.L2-3.1.12 Conditional Access; AC.L2-3.1.3 external sharing; AC.L2-3.1.5 privileged roles / PIM; AC.L2-3.1.1 inactive / stale accounts; plus mailbox forwarding, encryption config, risky sign-ins, device compliance. Extend as coverage grows | planned — needs real scanner output |
@@ -109,7 +113,7 @@ Already shipped outside this table: `/guides/best-cmmc-compliance-software/`
 (item #1 of the operator's 2026-10-03 strategy brief) — live and indexed 2026-09-26; operator
 wording review still open in `lamill.toml`.
 
-Keyword figures above: Ahrefs, US, pulled 2026-09-22 (from the operator's
+Keyword figures for v1.D–v2.B rows: Ahrefs, US, pulled 2026-09-22 (from the operator's
 2026-10-03 strategy brief).
 
 ## 6. Open questions
@@ -164,3 +168,11 @@ Keyword figures above: Ahrefs, US, pulled 2026-09-22 (from the operator's
   v1.B remainder / v1.C / v1.D packet deferred as down-funnel. Basis: GSC
   2026-09-30..10-28 — roundup earns 121 of 129 site impressions at avg position
   68, 0 clicks; top query `cmmc compliance software` (22 imp, pos 87).
+- 2026-11-07 — **Rest of v2 planned (operator chose option A).** v2.C/v2.D/v2.E
+  added from treg keyword research: DataForSEO Labs keyword_overview (US),
+  SE Ranking keywords/export (US) as second opinion, pulled 2026-11-07. Volumes
+  in v2.C–v2.E rows are DataForSEO; providers disagree widely on KD (DFS often
+  0 where SE Ranking gives 20–60). Re-checked: `cmmc level 2 requirements` 590
+  (Ahrefs had 800), `cmmc certification cost` 170 and declining (350),
+  `cmmc self assessment` 210 (300), `sprs score calculator` 30 (100) — the
+  standalone calculator was dropped into the v2.D SPRS score page.

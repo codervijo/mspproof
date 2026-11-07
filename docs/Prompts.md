@@ -48,3 +48,11 @@ to surface "last AI prompt" per project. Keep entries append-only.
 ## 2026-11-07 — v2.B: /cmmc/self-assessment/
 
 > Spoke targeting "cmmc self-assessment" (300/mo) + SPRS posting. Sources: 32 CFR 170.16/.19/.21/.22/.24, DFARS 252.204-7019/-7021 (eCFR), SPRS CMMC L2 Self Quick Entry Guide v4.0 (Feb 2025) and SPRS FAQ. Covers when self is enough, prerequisites (scope, SSP, PIEE Cyber Vendor User role, SAM CAGE hierarchy, Affirming Official), 9 SPRS steps, Final / Conditional / No CMMC Status, post-posting duties (CMMC UID to CO, annual affirmation), and the separate NIST SP 800-171 DoD Assessment score. Linked from hub #assessment and the cost page.
+
+## 2026-11-07 — v2.B: /cmmc/phase-2/ (CMMC rollout status)
+
+> Spoke targeting "cmmc phase 2" + "cmmc deadline 2026" (DoD's rollout phase, not a project phase). Schedule from 32 CFR 170.3(e) + DFARS rule effective date; suspension from Holland & Knight and Crowell summaries of the July 13, 2026 CIO and USD(A&S) memos; task force status from Covington (Sept 21) plus our own search to 2026-11-07. DFARS class deviation omitted: only secondary sources, which disagree. Linked from hub #status and cost page. Keyword research for the rest of v2 run via treg (DataForSEO + SE Ranking, US, 2026-11-07).
+
+## 2026-11-07 — rest of v2 planned: v2.C–v2.E
+
+> Operator chose option A: v2.C Level 1 pages + roundup back-link; v2.D assessment + SPRS (C3PAO, SPRS score absorbing the calculator, Level 2 assessment process, POA&M explainer); v2.E rules + scope (DFARS clauses, scoping, FCI vs CUI, Rev 2 vs Rev 3, 800-171 vs 800-53, enclave). CUI marking skipped (too close to excluded "what is cui" reader). Figures: DataForSEO + SE Ranking via treg, US, 2026-11-07.
