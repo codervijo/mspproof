@@ -1,0 +1,276 @@
+---
+// src/pages/cmmc/self-assessment/index.astro
+//
+// /cmmc/ cluster spoke (PRD v2.B), targeting "cmmc self-assessment" and SPRS
+// posting. Rules from 32 CFR 170.16/.21/.22/.24 and DFARS 252.204-7019/-7021
+// (eCFR, read 2026-11-07); SPRS steps from the SPRS CMMC Level 2
+// Self-Assessment Quick Entry Guide v4.0 (Feb 2025) and the SPRS FAQ.
+// Scores come from src/data/cmmc-level-2.ts.
+//
+// If a claim needs a [VERIFY] marker, set verifyPending = true and add this
+// path to the sitemap filter in astro.config.mjs; clear all three together.
+import GuideLayout from "../../../layouts/GuideLayout.astro";
+import ClusterCta from "../../../components/ClusterCta.astro";
+import { site, orgId } from "../../../lib/site";
+import { MAX_SCORE, CONDITIONAL_MIN_SCORE } from "../../../data/cmmc-level-2";
+import { estimate, usd, smallEntityEspHours } from "../../../data/cmmc-cost";
+
+const path = "/cmmc/self-assessment/";
+const hub = "/cmmc/level-2-requirements/";
+const url = `${site.url}${path}`;
+const title = "CMMC Self-Assessment: Run, Score, and Post in SPRS";
+const h1 = "CMMC Level 2 self-assessment: how to run it, score it, and post it in SPRS";
+const description =
+  "Who can self-assess for CMMC Level 2, how to score it, the exact SPRS steps, and the three results you can get: Final, Conditional, or No CMMC Status.";
+const checked = "2026-11-07";
+const verifyPending = false;
+
+const selfSmall = estimate("l2-self-small");
+
+const faqs = [
+  {
+    q: "Who can be the Affirming Official?",
+    a: "32 CFR 170.22 defines the Affirming Official as the senior-level representative within the company who is responsible for CMMC compliance and has the authority to affirm it. Whoever enters the assessment in SPRS can transfer it to that person to affirm.",
+  },
+  {
+    q: "What happens if my score is below 88?",
+    a: `SPRS only lets you affirm a Conditional (${CONDITIONAL_MIN_SCORE}–${MAX_SCORE - 1}) or Final (${MAX_SCORE}) Level 2 self-assessment. Below ${CONDITIONAL_MIN_SCORE} there is no CMMC status, so you can't meet a contract's Level 2 (Self) requirement until you fix gaps and reassess.`,
+  },
+  {
+    q: "How long is a self-assessment valid?",
+    a: "A Final Level 2 (Self) status is current for three years, provided the Affirming Official affirms continuing compliance every year. A Conditional status lasts 180 days; close the POA&M within that window or it expires.",
+  },
+  {
+    q: "Is my SPRS score the same as my CMMC status?",
+    a: "Not necessarily. SPRS also holds NIST SP 800-171 DoD Assessment scores under DFARS 252.204-7019 and 7020, which use the same 110-point scale but are a separate record. A CMMC Level 2 (Self) entry is its own assessment with its own status and CMMC UID.",
+  },
+  {
+    q: "Do I upload evidence to SPRS?",
+    a: "The SPRS entry steps cover a compliance status for each requirement, the assessment scope, employee count and CAGE codes, then the affirmation. Keep the evidence itself: 32 CFR 170.16 requires you to retain the artifacts used in the assessment for six years from the status date.",
+  },
+];
+
+const jsonLd = [
+  {
+    "@type": "Article",
+    "@id": `${url}#article`,
+    headline: h1,
+    description,
+    url,
+    dateModified: checked,
+    author: { "@id": orgId },
+    publisher: { "@id": orgId },
+    mainEntityOfPage: url,
+    isPartOf: { "@id": `${site.url}${hub}#article` },
+  },
+  {
+    "@type": "FAQPage",
+    mainEntity: faqs.map((f) => ({
+      "@type": "Question",
+      name: f.q,
+      acceptedAnswer: { "@type": "Answer", text: f.a },
+    })),
+  },
+];
+---
+<GuideLayout
+  title={title}
+  description={description}
+  path={path}
+  breadcrumbs={[{ name: "CMMC Level 2 requirements", path: hub }, { name: "Self-assessment" }]}
+  noindex={verifyPending}
+  jsonLd={jsonLd}
+>
+  <article class="guide">
+    <h1>{h1}</h1>
+    <p class="meta">
+      Based on 32 CFR Part 170, DFARS 252.204-7021 and the SPRS Level 2 self-assessment quick entry guide
+      (v4.0). Checked on <time datetime={checked}>November 7, 2026</time>.
+    </p>
+
+    <p class="lede">
+      A CMMC Level 2 self-assessment means your company assesses its own systems against the 110 NIST SP 800-171
+      requirements, scores the result with the CMMC scoring method, and enters it in SPRS. Your Affirming Official
+      then affirms it. SPRS accepts a score of {MAX_SCORE} as Final, valid three years with annual affirmations, and
+      {CONDITIONAL_MIN_SCORE}–{MAX_SCORE - 1} as Conditional, valid 180 days, if every gap is allowed on a POA&amp;M.
+      Anything else is "No CMMC Status."
+    </p>
+
+    <nav aria-label="On this page" class="toc">
+      <ol>
+        <li><a href="#allowed">When a self-assessment is enough</a></li>
+        <li><a href="#before">Before you start</a></li>
+        <li><a href="#run">Running the assessment</a></li>
+        <li><a href="#sprs">Posting it in SPRS, step by step</a></li>
+        <li><a href="#results">The three results</a></li>
+        <li><a href="#after">After you post</a></li>
+        <li><a href="#nist-score">The other SPRS score</a></li>
+        <li><a href="#help">Doing it with an MSP</a></li>
+        <li><a href="#faq">FAQ</a></li>
+      </ol>
+    </nav>
+
+    <h2 id="allowed">When a self-assessment is enough</h2>
+    <p>
+      The contract decides. Under DFARS 252.204-7021, the contracting officer fills in the CMMC level each contract
+      requires: Level 1 (Self), Level 2 (Self), Level 2 (C3PAO) or Level 3 (DIBCAC). If it says Level 2 (Self), a
+      self-assessment meets it. If it says Level 2 (C3PAO), it doesn't, however good your score. A higher status
+      also satisfies a lower requirement, so a Level 2 (Self) status covers Level 1 (Self) for the same scope.
+    </p>
+    <p>
+      Primes have to flow the right level down. Before awarding you a subcontract that involves CUI, a prime must
+      make sure you hold a current CMMC status at the level the work requires.
+    </p>
+
+    <h2 id="before">Before you start</h2>
+    <ul>
+      <li>
+        <strong>Draw the boundary.</strong> 32 CFR 170.19 requires you to specify the assessment scope first. It
+        covers assets that process, store or transmit CUI and the security protection assets that provide security
+        functions to them, each documented in your asset inventory, SSP and network diagram. Everything you score
+        depends on getting this right.
+      </li>
+      <li>
+        <strong>Have a current system security plan.</strong> Without one (CA.L2-3.12.4) the assessment can't be
+        completed. The SSP also has to document any external service provider you rely on.
+      </li>
+      <li>
+        <strong>Get SPRS access early.</strong> Entering results needs a PIEE account registered as a Vendor with the
+        "SPRS Cyber Vendor User" role for your company's CAGE hierarchy. The role is privileged: it can view, add and
+        edit assessments for every CAGE in that hierarchy.
+      </li>
+      <li>
+        <strong>Check your CAGE codes in SAM.</strong> SPRS imports company hierarchies from SAM, and you can only add
+        CAGEs that appear in yours. Fix SAM registrations before assessment day, not during data entry.
+      </li>
+      <li>
+        <strong>Name the Affirming Official.</strong> A senior person with authority to affirm compliance for the
+        company. They sign the affirmation, and they do it again every year.
+      </li>
+    </ul>
+
+    <h2 id="run">Running the assessment</h2>
+    <p>
+      Work through all 110 requirements using the assessment objectives in NIST SP 800-171A, which 32 CFR 170.16
+      names as the method. A requirement is MET only when every objective is satisfied by evidence in final form.
+      Drafts, working papers and unapproved policies don't count. A requirement that genuinely doesn't apply in
+      your scope is N/A and counts as MET.
+    </p>
+    <p>
+      Score each NOT MET requirement by its point value (1, 3 or 5) and subtract from {MAX_SCORE}. The
+      <a href={hub}>full list of Level 2 requirements with point values</a> shows each one, and
+      <a href={`${hub}#poam`}>which gaps can go on a POA&amp;M</a>. That second question matters more than the score.
+    </p>
+    <p>
+      Keep everything you used as evidence. 32 CFR 170.16 requires you to retain the assessment artifacts for six
+      years from the CMMC Status Date, and DoD can send DCMA's DIBCAC to check a self-assessment. If DIBCAC finds
+      the requirements weren't met or maintained, its results take precedence over yours.
+    </p>
+
+    <h2 id="sprs">Posting it in SPRS, step by step</h2>
+    <p>From the SPRS quick entry guide for Level 2 self-assessments (version 4.0, February 2025):</p>
+    <ol>
+      <li>Log in through the PIEE landing page (piee.eb.mil), open SPRS, and select <em>Cyber Reports (CMMC &amp; NIST)</em>.</li>
+      <li>Choose your company's hierarchy, identified by its highest-level owner (HLO) CAGE, and run Cyber Reports. An asterisk means you hold the Cyber Vendor User role for it.</li>
+      <li>On the <em>CMMC Assessments</em> and <em>CMMC Level 2 (Self)</em> tabs, select <em>Add New Level 2 CMMC Self-Assessment</em>.</li>
+      <li>Enter the assessment details: a compliance status for each requirement, family by family. The <em>Requirement Objectives</em> button shows the objectives behind each one.</li>
+      <li>Review the answers. Every requirement must have one before you can continue.</li>
+      <li>Add the assessment scope, employee count and the CAGE codes the assessment covers.</li>
+      <li>Check the score and status SPRS calculates.</li>
+      <li>If you aren't the Affirming Official, transfer the assessment to them by email.</li>
+      <li>The Affirming Official reviews the details, certifies review of the affirmation statement, and selects <em>Affirm</em>.</li>
+    </ol>
+    <p>
+      If the <em>Add New</em> button is missing, the SPRS FAQ says your account doesn't have an active Cyber Vendor
+      User role. The highest-level owner CAGE only controls access in SPRS. It doesn't define what the assessment
+      covers; the scope and CAGEs you enter do.
+    </p>
+
+    <h2 id="results">The three results</h2>
+    <h3>{MAX_SCORE}: Final Level 2 (Self)</h3>
+    <p>
+      Everything MET. The status is current for three years from the status date, as long as the Affirming
+      Official affirms continuing compliance every year. Reassess before the three years run out.
+    </p>
+    <h3>{CONDITIONAL_MIN_SCORE} to {MAX_SCORE - 1}, every gap POA&amp;M-eligible: Conditional Level 2 (Self)</h3>
+    <p>
+      For example, 105 with five 1-point gaps such as failed-logon lockout and session lock. You can be awarded
+      contracts that require Level 2 (Self), but you have 180 days from the status date to fix every gap, run a
+      POA&amp;M closeout self-assessment, post the result in SPRS and affirm again. Miss that and the status expires.
+      You then can't get new awards that need it until you achieve a new status.
+    </p>
+    <h3>Anything else: No CMMC Status</h3>
+    <p>
+      A score under {CONDITIONAL_MIN_SCORE}, or any gap that can't go on a POA&amp;M. The SPRS guide is blunt about
+      the second case: if a requirement isn't eligible for a POA&amp;M, the status is No CMMC Status "regardless of
+      score." A 109 with no visitor log (PE.L2-3.10.4) lands here. So does a 107 with multifactor authentication
+      only for admins. The <a href={`${hub}#examples`}>worked examples on the requirements page</a> show the
+      arithmetic.
+    </p>
+
+    <h2 id="after">After you post</h2>
+    <ul>
+      <li>
+        <strong>Give the CMMC UID to the contracting officer.</strong> SPRS assigns each assessment a 10-character
+        CMMC unique identifier. DFARS 252.204-7021 requires you to submit the UIDs for the systems used on the
+        contract, and to report any changes.
+      </li>
+      <li>
+        <strong>Affirm every year.</strong> The Affirming Official affirms in SPRS after every assessment, after a
+        POA&amp;M closeout, and annually after the Final status date.
+      </li>
+      <li>
+        <strong>Only use assessed systems.</strong> The clause allows CUI only on information systems that hold the
+        required CMMC status.
+      </li>
+      <li><strong>Reassess every three years</strong> and post the new result.</li>
+    </ul>
+
+    <h2 id="nist-score">The other SPRS score</h2>
+    <p>
+      SPRS also holds NIST SP 800-171 DoD Assessment scores. A solicitation with DFARS 252.204-7019 requires a
+      current one, no more than three years old, for each covered system. It uses the same 110-point scale, and a
+      self-performed Basic Assessment can be posted by its own route. It is a different record from a CMMC Level 2
+      (Self) assessment, with no CMMC status attached. Check which one each solicitation asks for. A NIST SP 800-171
+      Basic score is not a CMMC status, so on its own it doesn't meet a CMMC Level 2 (Self) requirement.
+    </p>
+
+    <h2 id="help">Doing it with an MSP</h2>
+    <p>
+      DoD's own cost model assumes a small business doesn't have full-time security staff and buys
+      {" "}{smallEntityEspHours["l2-self-small"]} hours of outside help to plan, run and report a Level 2
+      self-assessment, about {usd(selfSmall.total)} in the assessment year. See
+      <a href="/cmmc/certification-cost/">what CMMC assessments cost</a> for the line items. If an MSP processes,
+      stores or transmits CUI for you, its services are inside your assessment scope too, and its evidence is part of
+      yours.
+    </p>
+
+    <h2 id="faq">Frequently asked questions</h2>
+    {faqs.map((f) => (
+      <>
+        <h3>{f.q}</h3>
+        <p>{f.a}</p>
+      </>
+    ))}
+
+    <ClusterCta path={path} title={title} />
+
+    <h2 id="sources">Sources</h2>
+    <ul class="sources">
+      <li>32 CFR Part 170 on eCFR: <a href="https://www.ecfr.gov/current/title-32/part-170/section-170.16" rel="nofollow">§170.16 Level 2 self-assessment</a>; <a href="https://www.ecfr.gov/current/title-32/part-170/section-170.21" rel="nofollow">§170.21 POA&amp;M</a>; <a href="https://www.ecfr.gov/current/title-32/part-170/section-170.22" rel="nofollow">§170.22 affirmation</a>; <a href="https://www.ecfr.gov/current/title-32/part-170/section-170.24" rel="nofollow">§170.24 scoring</a></li>
+      <li>DFARS on eCFR: <a href="https://www.ecfr.gov/current/title-48/chapter-2/subchapter-H/part-252/subpart-252.2/section-252.204-7021" rel="nofollow">252.204-7021 (CMMC level requirements)</a>; <a href="https://www.ecfr.gov/current/title-48/chapter-2/subchapter-H/part-252/subpart-252.2/section-252.204-7019" rel="nofollow">252.204-7019 (NIST SP 800-171 DoD Assessment)</a></li>
+      <li>SPRS: <a href="https://www.sprs.csd.disa.mil/pdf/CMMCL2SelfQuickEntryGuide.pdf" rel="nofollow">CMMC Level 2 Self-Assessment Quick Entry Guide v4.0</a>; <a href="https://www.sprs.csd.disa.mil/faqs.htm" rel="nofollow">SPRS FAQ</a>; <a href="https://www.sprs.csd.disa.mil/access.htm" rel="nofollow">PIEE access instructions</a></li>
+      <li><a href="https://csrc.nist.gov/pubs/sp/800/171/a/final" rel="nofollow">NIST SP 800-171A</a> (assessment objectives)</li>
+    </ul>
+
+    <nav class="related" aria-label="Related">
+      <a href={hub}>CMMC Level 2 requirements: all 110, with point values</a>
+      <a href="/cmmc/certification-cost/">CMMC certification cost: DoD's estimate, itemized</a>
+    </nav>
+  </article>
+</GuideLayout>
+
+<style>
+  .toc { margin-top: 1.5rem; padding: 1rem 1.25rem; border: 1px solid var(--color-border); border-radius: var(--radius); font-size: 0.875rem; }
+  .toc ol { margin-top: 0; }
+</style>

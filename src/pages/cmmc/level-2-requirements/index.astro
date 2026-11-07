@@ -8,7 +8,7 @@
 //
 // Spokes link up here as they ship. When one goes live, link it from the
 // matching section below (see PRD v2.A linking rules). Linked so far:
-// /cmmc/certification-cost/ (#assessment).
+// /cmmc/certification-cost/ (#assessment), /cmmc/self-assessment/ (#assessment).
 //
 // If a claim needs a [VERIFY] marker, set verifyPending = true and add this
 // path to the sitemap filter in astro.config.mjs; clear all three together.
@@ -213,7 +213,8 @@ const jsonLd = [
     <p>
       Each contract names the CMMC status it requires. For Level 2 (Self), you assess against NIST SP 800-171A, post
       the score in the Supplier Performance Risk System (SPRS) with your CAGE codes and assessment scope, and
-      affirm. For Level 2 (C3PAO), an authorized third-party assessment organization does the assessment. Either way:
+      affirm. <a href="/cmmc/self-assessment/">How to run a Level 2 self-assessment and post it in SPRS</a> walks
+      through each step. For Level 2 (C3PAO), an authorized third-party assessment organization does the assessment. Either way:
     </p>
     <ul>
       <li>reassess every three years;</li>
