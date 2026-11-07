@@ -158,35 +158,27 @@ can ship today.
 
 ## Versioning
 
-This project follows the sites/* **canonical versioning convention** (defined
-in `sites/portfolio/AI_AGENTS.md`):
+This project follows the sites/* **canonical versioning convention**. The
+canonical statement is `sites/portfolio/AI_AGENTS.md` § Versioning; when this
+section and that one disagree, that one wins.
 
-- **`vN`** — major capability tier. Each is a coherent shipped capability and
-  may break compat with the previous tier. SemVer-MAJOR semantics.
-- **`vN.X`** — phase letter within a tier (A / B / C / …). Internal slicing of
-  build work; signals "order/scope can shift." Each phase still ships
-  independently.
-- **`vN.X.Y`** — numeric sub-phase for follow-up work that lands AFTER `vN.X`
-  shipped (e.g. polish, bug fixes, scope cuts).
+- **`vN`** — major capability tier (SemVer-MAJOR semantics).
+- **`vN.X`** — phase letter within a tier (A, B, C, …). Each phase is a
+  shippable slice.
+- **`vN.A` is always the planning / decisions-lock phase.** Build work starts
+  at `.B`.
+- **Two levels only. Never `vN.X.Y`.** Follow-up work inside a tier pushes
+  later phase letters down to make room.
+- No parallel schemes or invented qualifiers: no `0.1.0`, `Sprint 3`,
+  `Phase 1.A`, `Wave 2a`, or `v1.B(draft)`.
 
-Two-layer notation separates **external version** (what consumers see) from
-**internal phasing** (how the team slices work). Letters signal *un-promised* —
-nobody mistakes `v1.B` for a SemVer minor release.
+"Phase 2" in this repo's content means **DoD's CMMC rollout phase**, never one
+of this project's phases. Write it as "DoD's Phase 2" or "CMMC rollout" in
+planning docs so the two can't be confused.
 
-**Always use this numbering when planning or shipping work on this project.**
-Specifically:
-
-- Every entry in `docs/prd.md`'s phases table uses `vN.X` (or `vN.X.Y`).
-- Every commit message that ships a phase mentions its version (e.g.
-  `v1.B — auth flow`).
-- Every entry in `docs/Prompts.md` references the version of the work it
-  describes when relevant.
-
-Don't introduce a parallel scheme (no `0.1.0` / `Sprint 3` / etc.). When in
-doubt, the canonical statement is `sites/portfolio/AI_AGENTS.md`.
-
-Track this project's progress in `docs/prd.md` against this taxonomy. v0.A is
-the bootstrap (this scaffold); v1.A is the first real shipped capability.
+Applies to `docs/prd.md`'s phases table, phase references in `docs/Prompts.md`,
+and commit subjects (e.g. `v2.B — <what shipped>`). v0.A was the bootstrap
+scaffold.
 
 ## Conventions
 

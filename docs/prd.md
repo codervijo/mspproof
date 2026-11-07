@@ -1,7 +1,7 @@
 ---
 project: mspproof.com
 prd_version: 2
-project_version: v1.A
+project_version: v2.B
 status: in-progress
 owner: Vijo
 last_updated: 2026-10-28
@@ -54,8 +54,8 @@ Two-level versioning convention (canonical: `sites/portfolio/AI_AGENTS.md`):
 | Version | Theme | Acceptance |
 |---|---|---|
 | v0 | scaffold | local builds, CF wrangler.jsonc + public/_headers in place, repo initialized |
-| v1 | trust + conversion | site passes a compliance buyer's sniff test (legal, security, named contact, honest preview labels); email capture works; Wave 1 pages + gated sample packet live |
-| v2 | contractor-side content cluster | Level 2 requirements hub + spokes (incl. Phase 2 status page and ungated SPRS calculator) live, all linking up to the hub, each with an MSP-side CTA; roundup linked into the cluster |
+| v1 | trust + conversion | site passes a compliance buyer's sniff test (legal, security, named contact, honest preview labels); email capture works; gated sample packet live |
+| v2 | contractor-side content cluster | Level 2 requirements hub + spokes (incl. CMMC rollout-status page and ungated SPRS calculator) live, all linking up to the hub, each with an MSP-side CTA; roundup linked into the cluster |
 | v3 | product-evidence moat | M365 CMMC pillar, GCC High page, gated SSP/POA&M templates, one control-evidence page per control the scanner actually covers |
 
 ## 5. Phases
@@ -70,15 +70,15 @@ Numbering kept as-is so shipped `v1.B` commits still match their rows.
 | Phase | Theme | Features | Status |
 |---|---|---|---|
 | **v0.A** | scaffolded | `portfolio new bootstrap` ran; standard files written; git initialized | ✅ |
-| **v1.A** | planning lock | decide named entity vs faceless; CertHorizon separate vs shared content spine; confirm Phase 2 framing; confirm scanner/product status | ✅ all four answered (see §6) |
+| **v1.A** | planning lock | decide named entity vs faceless; CertHorizon separate vs shared content spine; confirm framing of DoD's CMMC Phase 2 rollout suspension; confirm scanner/product status | ✅ all four answered (see §6) |
 | **v1.B** | trust gates | Pilot form delivers via Web3Forms (7e734b0); homepage presents product as in development, dashboard as illustrative preview (fc301c4); Terms, Contact pages (footer links are dead `#` today) — faceless, reading site identity from the config added in v2.B; security / data-handling page (*planned* Graph scopes, residency, retention, deletion); repoint "View sample report" off the mockup | partial — form + homepage relabel shipped; rest deferred (down-funnel), needs planned Graph scopes + data policy |
 | **v1.C** | capture backend | email gate on CF Workers (form → storage → delivery) for gated assets | deferred (down-funnel) — needs backend choice |
-| **v1.D** | Wave 1 content | sample evidence packet page, gated PDF, fictional tenant clearly labeled, by control family. (Phase 2 status page and SPRS calculator moved to v2.B / v2.C, 2026-10-28) | deferred — needs v1.C, real packet output |
+| **v1.D** | gated sample packet | sample evidence packet page, gated PDF, fictional tenant clearly labeled, by control family. (CMMC rollout-status page and SPRS calculator moved to v2.B / v2.C, 2026-10-28) | deferred — needs v1.C, real packet output |
 | **v2.A** | planning | lock cluster slugs, hub/spoke linking, MSP-side CTA pattern; site-identity config shape (faceless now, credibility layers — named entity, About, team, credentials — addable later without rewriting pages) | ✅ locked 2026-10-28 (decisions below the table) |
-| **v2.B** | Wave 2a content | hub: CMMC Level 2 requirements, all 110 controls (800/mo, KD 0); spokes: CMMC certification cost incl. C3PAO cost (350, KD 4); CMMC self-assessment + SPRS posting (300, KD 1); CMMC Phase 2 status page (`cmmc phase 2` 200/mo; fold in `cmmc deadline 2026`); Privacy page, faceless, reading the site-identity config (pilot form already collects emails) | in progress — built 2026-10-28: `src/lib/site.ts`, `GuideLayout`, `ClusterCta`, roundup migrated (article/meta/JSON-LD unchanged), Privacy (commitments confirmed 2026-11-07, indexable), hub; certification-cost spoke 2026-11-07 (DoD RIA figures, linked from hub #assessment). Next: self-assessment/SPRS, Phase 2 spokes |
-| **v2.C** | Wave 2b content | spokes: CMMC scoping guide (200, KD 0); CMMC Level 1 vs Level 2 (200); SPRS score calculator, ungated (`sprs score calculator` 100/mo, KD 0; reuse calcengine/washcalc pattern); NIST 800-171 checklist with Level 2 checklist as anchor section on the hub — not a separate page (100, KD 1); link `/guides/best-cmmc-compliance-software/` into the cluster | planned — needs v2.B |
+| **v2.B** | hub + first spokes | hub: CMMC Level 2 requirements, all 110 controls (800/mo, KD 0); spokes: CMMC certification cost incl. C3PAO cost (350, KD 4); CMMC self-assessment + SPRS posting (300, KD 1); CMMC rollout-status page on DoD's suspended Phase 2 (`cmmc phase 2` 200/mo; fold in `cmmc deadline 2026`); Privacy page, faceless, reading the site-identity config (pilot form already collects emails) | in progress — built 2026-10-28: `src/lib/site.ts`, `GuideLayout`, `ClusterCta`, roundup migrated (article/meta/JSON-LD unchanged), Privacy (commitments confirmed 2026-11-07, indexable), hub; certification-cost spoke 2026-11-07 (DoD RIA figures, linked from hub #assessment); self-assessment/SPRS spoke 2026-11-07 (linked from hub #assessment + cost page). Next: CMMC rollout-status spoke (`/cmmc/phase-2/`) |
+| **v2.C** | remaining spokes + calculator | spokes: CMMC scoping guide (200, KD 0); CMMC Level 1 vs Level 2 (200); SPRS score calculator, ungated (`sprs score calculator` 100/mo, KD 0; reuse calcengine/washcalc pattern); NIST 800-171 checklist with Level 2 checklist as anchor section on the hub — not a separate page (100, KD 1); link `/guides/best-cmmc-compliance-software/` into the cluster | planned — needs v2.B |
 | **v3.A** | planning | inventory scanner control coverage; control-evidence page template (Graph query → artifact → what an assessor wants) | planned |
-| **v3.B** | Wave 3 content | Microsoft 365 CMMC compliance pillar (60/mo); GCC High vs commercial for CMMC; SSP and POA&M templates, gated | planned — templates need v1.C |
+| **v3.B** | M365 pillar + templates | Microsoft 365 CMMC compliance pillar (60/mo); GCC High vs commercial for CMMC; SSP and POA&M templates, gated | planned — templates need v1.C |
 | **v3.C** | control-evidence pages | one page per scanner-covered control, starting with: IA.L2-3.5.3 MFA; AU.L2-3.3.1 audit log; AC.L2-3.1.12 Conditional Access; AC.L2-3.1.3 external sharing; AC.L2-3.1.5 privileged roles / PIM; AC.L2-3.1.1 inactive / stale accounts; plus mailbox forwarding, encryption config, risky sign-ins, device compliance. Extend as coverage grows | planned — needs real scanner output |
 
 **v2.A decisions (locked 2026-10-28):**
@@ -106,7 +106,7 @@ Numbering kept as-is so shipped `v1.B` commits still match their rows.
   change and points the homepage footer's dead Privacy link at `/privacy/`.
 
 Already shipped outside this table: `/guides/best-cmmc-compliance-software/`
-(Wave 1 #1 of the 2026-10-03 plan) — live and indexed 2026-09-26; operator
+(item #1 of the operator's 2026-10-03 strategy brief) — live and indexed 2026-09-26; operator
 wording review still open in `lamill.toml`.
 
 Keyword figures above: Ahrefs, US, pulled 2026-09-22 (from the operator's
@@ -115,13 +115,13 @@ Keyword figures above: Ahrefs, US, pulled 2026-09-22 (from the operator's
 ## 6. Open questions
 
 - *(append-only log; mark answered with date but never delete)*
-- 2026-10-03 — **Phase 2 date conflict.** Strategy brief says Phase 2 lands
+- 2026-10-03 — **DoD CMMC Phase 2 date conflict.** Strategy brief says DoD's Phase 2 lands
   ~2026-11-10; the live guide (sourced) says DoD suspended Phase 2 on
   2026-07-13 pending the Reform Task Force review. v1.D page must reflect
   current status at publish time.
   **Answered 2026-10-03:** suspension still in force. Task Force report
   delivered to DoW CIO ~2026-09-11, not published; Phase 1 obligations
-  unchanged. Guide's status section still accurate. v1.D = "Phase 2 status".
+  unchanged. Guide's status section still accurate. v1.D = "CMMC rollout status" page.
 - 2026-10-03 — "~431 orgs certified vs ~80,000 needing Level 2" (brief, citing
   Oct 2025 CyberAB town hall) — unsourced in repo; do not publish without a
   citeable source.

@@ -44,3 +44,7 @@ to surface "last AI prompt" per project. Keep entries append-only.
 ## 2026-11-07 — v2.B: /cmmc/certification-cost/
 
 > Spoke targeting "cmmc certification cost" (350/mo). All figures from DoD's regulatory impact analysis in the 32 CFR 170 final rule (89 FR 83092, pp. 83181–83186), 2023 dollars, encoded in `src/data/cmmc-cost.ts` with tests that line items sum to DoD totals and that page-derived figures hold ($67,474 C3PAO premium, 31% C3PAO share, small-entity ESP $45,809 > C3PAO $31,234). No vendor price ranges (no primary source). Hub links down from #assessment. Note: operator's push of 5f0c66c didn't reach origin (origin still fc301c4).
+
+## 2026-11-07 — v2.B: /cmmc/self-assessment/
+
+> Spoke targeting "cmmc self-assessment" (300/mo) + SPRS posting. Sources: 32 CFR 170.16/.19/.21/.22/.24, DFARS 252.204-7019/-7021 (eCFR), SPRS CMMC L2 Self Quick Entry Guide v4.0 (Feb 2025) and SPRS FAQ. Covers when self is enough, prerequisites (scope, SSP, PIEE Cyber Vendor User role, SAM CAGE hierarchy, Affirming Official), 9 SPRS steps, Final / Conditional / No CMMC Status, post-posting duties (CMMC UID to CO, annual affirmation), and the separate NIST SP 800-171 DoD Assessment score. Linked from hub #assessment and the cost page.
