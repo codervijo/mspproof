@@ -1,0 +1,331 @@
+---
+// src/pages/cmmc/level-2-requirements/index.astro
+//
+// Hub of the /cmmc/ contractor cluster (PRD v2.B), targeting
+// "cmmc level 2 requirements". Requirement text, point values and POA&M
+// rules come from src/data/cmmc-level-2.ts (NIST SP 800-171r2 + 32 CFR 170,
+// read 2026-10-28); worked-example arithmetic uses the same functions.
+//
+// Spokes link up here as they ship. When one goes live, link it from the
+// matching section below (see PRD v2.A linking rules).
+//
+// If a claim needs a [VERIFY] marker, set verifyPending = true and add this
+// path to the sitemap filter in astro.config.mjs; clear all three together.
+import GuideLayout from "../../../layouts/GuideLayout.astro";
+import ClusterCta from "../../../components/ClusterCta.astro";
+import { site, orgId } from "../../../lib/site";
+import {
+  families, requirements, points, poam, PARTIAL, PREREQUISITE,
+  MAX_SCORE, MIN_SCORE, CONDITIONAL_MIN_SCORE,
+} from "../../../data/cmmc-level-2";
+
+const path = "/cmmc/level-2-requirements/";
+const url = `${site.url}${path}`;
+const title = "CMMC Level 2 Requirements: All 110 With Point Values";
+const h1 = "CMMC Level 2 requirements: the 110 controls, how they're scored, and what can wait";
+const description =
+  "Every CMMC Level 2 requirement by family, with its point value and whether it can go on a POA&M. Plus the 88-point rule and the six gaps that can't wait.";
+const checked = "2026-10-28";
+const verifyPending = false;
+
+const byFamily = families.map((f) => {
+  const reqs = requirements.filter((r) => r.family === f.code);
+  return { ...f, reqs, fivePoint: reqs.filter((r) => points(r.id) === 5).length };
+});
+const eligible = requirements.filter((r) => poam(r.id) === "yes").length;
+
+const pointLabel = (id: string) =>
+  id === PREREQUISITE ? "Prerequisite" : PARTIAL.has(id) ? "3 or 5" : String(points(id));
+const poamLabel = { yes: "Yes", no: "No", partial: "Only if not FIPS" } as const;
+
+const faqs = [
+  {
+    q: "Are CMMC Level 2 requirements the same as NIST SP 800-171?",
+    a: "Yes. 32 CFR 170.14(c)(3) says the Level 2 requirements are identical to NIST SP 800-171 Revision 2. CMMC adds the identifiers (AC.L2-3.1.1 and so on), the scoring rules, the POA&M limits and the assessment process. It does not add or remove requirements.",
+  },
+  {
+    q: "Does CMMC Level 2 use NIST SP 800-171 Rev 3?",
+    a: "No. The CMMC rule incorporates Revision 2 by reference, and Revision 2's 110 requirements are what get assessed. Revision 3 (97 requirements, published 2024) does not apply to CMMC unless the rule is amended.",
+  },
+  {
+    q: "What is the lowest possible SPRS score?",
+    a: `${MIN_SCORE}. Each NOT MET requirement subtracts its point value from ${MAX_SCORE}, and the values add up to ${MAX_SCORE - MIN_SCORE}. The rule allows a negative score; it shows how far a system is from meeting the requirements.`,
+  },
+  {
+    q: "How long do I have to close a POA&M?",
+    a: "180 days from the Conditional CMMC Status Date. A closeout assessment has to confirm it: you perform it yourself for Level 2 (Self), a C3PAO performs it for Level 2 (C3PAO). If it isn't closed in time, the conditional status expires.",
+  },
+  {
+    q: "Does my MSP's environment count toward my assessment?",
+    a: "If your MSP processes, stores or transmits CUI as part of its services, yes. Under 32 CFR 170.16(c)(3) those services are assessed within your scope against all Level 2 requirements, and the relationship has to be documented in your SSP and the provider's customer responsibility matrix. A cloud service that stores CUI has to be FedRAMP Moderate authorized or equivalent.",
+  },
+  {
+    q: "Can I self-assess, or do I need a C3PAO?",
+    a: "The contract decides. A solicitation names the CMMC status it requires: Level 2 (Self) or Level 2 (C3PAO). Either way you reassess every three years and affirm compliance in SPRS annually.",
+  },
+];
+
+const jsonLd = [
+  {
+    "@type": "Article",
+    "@id": `${url}#article`,
+    headline: h1,
+    description,
+    url,
+    dateModified: checked,
+    author: { "@id": orgId },
+    publisher: { "@id": orgId },
+    mainEntityOfPage: url,
+  },
+  {
+    "@type": "FAQPage",
+    mainEntity: faqs.map((f) => ({
+      "@type": "Question",
+      name: f.q,
+      acceptedAnswer: { "@type": "Answer", text: f.a },
+    })),
+  },
+];
+---
+<GuideLayout
+  title={title}
+  description={description}
+  path={path}
+  breadcrumbs={[{ name: "CMMC Level 2 requirements" }]}
+  noindex={verifyPending}
+  jsonLd={jsonLd}
+>
+  <article class="guide">
+    <h1>{h1}</h1>
+    <p class="meta">
+      Requirement text from NIST SP 800-171 Rev 2; scoring and POA&amp;M rules from 32 CFR Part 170. Checked
+      against both on <time datetime={checked}>October 28, 2026</time>.
+    </p>
+
+    <p class="lede">
+      CMMC Level 2 is the 110 security requirements of NIST SP 800-171 Revision 2, grouped into 14 families.
+      Each one is scored MET or NOT MET, and each NOT MET subtracts 1, 3 or 5 points from a maximum of {MAX_SCORE}.
+      You can get conditional status with a score of {CONDITIONAL_MIN_SCORE} or more, but only if every gap is
+      one of the {eligible} one-point requirements allowed on a POA&amp;M, and only if you close those gaps
+      within 180 days.
+    </p>
+
+    <p>
+      That last condition is where most readiness plans go wrong. A score of 107 sounds safe. It fails if the
+      three missing points are multifactor authentication for ordinary users, because that requirement can't be
+      deferred. The full list is <a href="#requirements">below</a>, with each requirement's point value and
+      whether it can wait.
+    </p>
+
+    <nav aria-label="On this page" class="toc">
+      <ol>
+        <li><a href="#scoring">How Level 2 is scored</a></li>
+        <li><a href="#poam">What can go on a POA&amp;M</a></li>
+        <li><a href="#examples">Three scores, three outcomes</a></li>
+        <li><a href="#assessment">Self-assessment or C3PAO</a></li>
+        <li><a href="#status">Where the rollout stands</a></li>
+        <li><a href="#evidence">Where the evidence lives</a></li>
+        <li><a href="#requirements">All 110 requirements by family</a></li>
+        <li><a href="#faq">FAQ</a></li>
+      </ol>
+    </nav>
+
+    <h2 id="scoring">How Level 2 is scored</h2>
+    <p>
+      Every requirement starts as MET. An assessor (or you, in a self-assessment) checks it against its assessment
+      objectives from NIST SP 800-171A. If any objective isn't satisfied by final, approved evidence, the
+      requirement is NOT MET and its points come off the {MAX_SCORE}. Drafts and working papers don't count as
+      evidence. A requirement that genuinely doesn't apply, such as separating public-facing systems when you have
+      none, is scored N/A, which counts the same as MET.
+    </p>
+    <ul>
+      <li>
+        <strong>5 points</strong> (42 requirements): gaps that "could lead to significant exploitation of the
+        network, or exfiltration of CUI." Access control basics, audit logging, baseline configurations, incident
+        handling, malware protection, boundary protection.
+      </li>
+      <li>
+        <strong>3 points</strong> (14 requirements): gaps with "a specific and confined effect," such as least
+        privilege, user accountability in logs, media protection and encryption in transit.
+      </li>
+      <li>
+        <strong>1 point</strong> (the remaining 51): gaps with "a limited or indirect effect."
+      </li>
+      <li>
+        <strong>Partial credit</strong> for two requirements. Multifactor authentication (IA.L2-3.5.3) costs 3 points
+        if it covers only remote and privileged users, 5 if it covers nobody. FIPS-validated encryption
+        (SC.L2-3.13.11) costs 3 points if you encrypt CUI with non-validated modules, 5 if you don't encrypt it.
+      </li>
+    </ul>
+    <p>
+      One requirement works differently. Without a current system security plan (CA.L2-3.12.4), the assessment
+      can't be completed at all, so the SSP is a prerequisite, never a deduction. With it in place, the lowest
+      possible score is {MIN_SCORE}.
+    </p>
+
+    <h2 id="poam">What can go on a POA&amp;M</h2>
+    <p>
+      A plan of action and milestones lets you be assessed with some requirements still NOT MET and receive a
+      Conditional Level 2 status. 32 CFR 170.21 allows it only when all of these hold:
+    </p>
+    <ol>
+      <li>Your score is at least {CONDITIONAL_MIN_SCORE} ({CONDITIONAL_MIN_SCORE} / {MAX_SCORE} is the 0.8 threshold).</li>
+      <li>
+        Every requirement on the POA&amp;M is worth 1 point. The one exception is SC.L2-3.13.11 when you use encryption
+        that isn't FIPS-validated (the 3-point case).
+      </li>
+      <li>
+        None of these six is on it, even though none is worth more than 1 point: AC.L2-3.1.20 external connections,
+        AC.L2-3.1.22 public information, CA.L2-3.12.4 system security plan, PE.L2-3.10.3 escorting visitors,
+        PE.L2-3.10.4 physical access logs, PE.L2-3.10.5 physical access devices.
+      </li>
+    </ol>
+    <p>
+      That leaves {eligible} requirements that can wait, plus the encryption case. Everything else has to be MET on
+      the day of the assessment. A closeout assessment then has to confirm every POA&amp;M item is fixed within 180
+      days of the conditional status date, or the status expires.
+    </p>
+
+    <h2 id="examples">Three scores, three outcomes</h2>
+    <h3>105, and conditional status</h3>
+    <p>
+      Five 1-point gaps: no lockout after failed logons (AC.L2-3.1.8), no session lock (AC.L2-3.1.10), no alert when
+      audit logging fails (AU.L2-3.3.4), identifiers not disabled after inactivity (IA.L2-3.5.6), and media not
+      marked as CUI (MP.L2-3.8.4). Score 105. All five are POA&amp;M-eligible, so this is Conditional Level 2. The
+      180-day clock starts on the status date.
+    </p>
+    <h3>107, and no status at all</h3>
+    <p>
+      Everything is MET except multifactor authentication, which covers admins and remote access but not ordinary
+      users on the network. IA.L2-3.5.3 is partially effective: minus 3, score 107. But a POA&amp;M can only hold
+      1-point requirements, so this gap can't be deferred. There is no Conditional status until MFA covers everyone.
+      The score is well above {CONDITIONAL_MIN_SCORE}; it doesn't matter.
+    </p>
+    <h3>109, and no status either</h3>
+    <p>
+      A single gap: the front desk doesn't keep a visitor log. PE.L2-3.10.4 is worth 1 point, so the score is 109. It
+      is also on the list of six that can never go on a POA&amp;M. Fix the log before the assessment, or there is
+      no Conditional status. The cheapest gaps are not always the ones that can wait.
+    </p>
+
+    <h2 id="assessment">Self-assessment or C3PAO</h2>
+    <p>
+      Each contract names the CMMC status it requires. For Level 2 (Self), you assess against NIST SP 800-171A, post
+      the score in the Supplier Performance Risk System (SPRS) with your CAGE codes and assessment scope, and
+      affirm. For Level 2 (C3PAO), an authorized third-party assessment organization does the assessment. Either way:
+    </p>
+    <ul>
+      <li>reassess every three years;</li>
+      <li>affirm continued compliance in SPRS every year;</li>
+      <li>keep the evidence used in the assessment for six years from the status date.</li>
+    </ul>
+    <p>
+      DoD reserves the right to have DCMA's DIBCAC assess a contractor who self-assessed. If DIBCAC finds the
+      requirements weren't met or maintained, its results take precedence over your status.
+    </p>
+
+    <h2 id="status">Where the rollout stands</h2>
+    <p>
+      Phase 1 started November 10, 2025, when the DFARS rule took effect: Level 1 and Level 2 self-assessments in
+      applicable solicitations. Phase 2, which would have required C3PAO certification at Level 2 from November 10,
+      2026, was suspended on July 13, 2026 pending a CMMC Reform Task Force review. As of October 28, 2026, the
+      task force's report has not been published. The requirements on this page did not change: NIST SP 800-171
+      Rev 2 still applies under DFARS 252.204-7012, and SPRS posting and annual affirmations continue.
+    </p>
+
+    <h2 id="evidence">Where the evidence lives</h2>
+    <p>
+      For a small contractor running email, files and identities in Microsoft 365, many of the technical
+      requirements are settings in that tenant. That includes who can sign in and how (Access Control,
+      Identification and Authentication), what gets logged and how long it's kept (Audit and Accountability), how
+      devices are configured (Configuration Management), and how data is encrypted and shared (System and
+      Communications Protection). Physical Protection, Personnel Security and Awareness and Training produce
+      evidence the business generates itself: visitor logs, screening records, training rosters.
+    </p>
+    <p>
+      If an MSP processes, stores or transmits CUI as part of its services, 32 CFR 170.16 puts those services
+      inside your assessment scope: the relationship is documented in your SSP and the provider's services are
+      assessed against all Level 2 requirements. Ask your provider early who produces the evidence for each requirement they touch. The answer
+      decides how much of this list you can hand off and how much you have to collect yourself.
+    </p>
+    <p>
+      For MSPs choosing tools to deliver this across many clients, see
+      <a href="/guides/best-cmmc-compliance-software/">our comparison of CMMC compliance software for MSPs</a>.
+    </p>
+
+    <h2 id="requirements">All 110 requirements by family</h2>
+    <p>
+      Requirement text is verbatim from NIST SP 800-171 Rev 2. <strong>Points</strong> is what a NOT MET costs.
+      <strong>POA&amp;M</strong> is whether the requirement can be deferred under 32 CFR 170.21.
+    </p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th scope="col">Family</th><th scope="col">Requirements</th><th scope="col">Worth 5 points</th></tr>
+        </thead>
+        <tbody>
+          {byFamily.map((f) => (
+            <tr>
+              <th scope="row"><a href={`#${f.code.toLowerCase()}`}>{f.code} · {f.name}</a></th>
+              <td>{f.reqs.length}</td>
+              <td>{f.fivePoint}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+
+    {byFamily.map((f) => (
+      <section>
+        <h3 id={f.code.toLowerCase()}>{f.name} ({f.code}, {f.reqs.length})</h3>
+        <div class="table-wrap">
+          <table class="reqs">
+            <thead>
+              <tr><th scope="col">ID</th><th scope="col">Requirement</th><th scope="col">Points</th><th scope="col">POA&amp;M</th></tr>
+            </thead>
+            <tbody>
+              {f.reqs.map((r) => (
+                <tr id={r.id.toLowerCase().replace(/\./g, "-")}>
+                  <th scope="row">{r.id}</th>
+                  <td>{r.text}</td>
+                  <td>{pointLabel(r.id)}</td>
+                  <td>{poamLabel[poam(r.id)]}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
+    ))}
+
+    <h2 id="faq">Frequently asked questions</h2>
+    {faqs.map((f) => (
+      <>
+        <h3>{f.q}</h3>
+        <p>{f.a}</p>
+      </>
+    ))}
+
+    <ClusterCta path={path} title={title} />
+
+    <h2 id="sources">Sources</h2>
+    <ul class="sources">
+      <li><a href="https://doi.org/10.6028/NIST.SP.800-171r2" rel="nofollow">NIST SP 800-171 Rev 2</a> (requirement text)</li>
+      <li>32 CFR Part 170 on eCFR: <a href="https://www.ecfr.gov/current/title-32/part-170/section-170.14" rel="nofollow">§170.14 model and levels</a>; <a href="https://www.ecfr.gov/current/title-32/part-170/section-170.16" rel="nofollow">§170.16 Level 2 self-assessment</a>; <a href="https://www.ecfr.gov/current/title-32/part-170/section-170.17" rel="nofollow">§170.17 Level 2 certification</a>; <a href="https://www.ecfr.gov/current/title-32/part-170/section-170.21" rel="nofollow">§170.21 POA&amp;M</a>; <a href="https://www.ecfr.gov/current/title-32/part-170/section-170.24" rel="nofollow">§170.24 scoring</a></li>
+      <li>Rollout status: <a href="https://www.govinfo.gov/content/pkg/FR-2025-09-10/html/2025-17359.htm" rel="nofollow">DFARS final rule (Sept 10, 2025)</a>; <a href="https://www.war.gov/News/Releases/Release/Article/4542329/forging-the-arsenal-of-freedom-department-of-war-suspends-cmmc-phase-ii-require/" rel="nofollow">DoW release suspending Phase II (July 2026)</a>; <a href="https://www.hklaw.com/en/insights/publications/2026/07/dow-suspends-cmmc-phase-ii-requirements" rel="nofollow">Holland &amp; Knight summary</a></li>
+    </ul>
+
+    <nav class="related" aria-label="Related">
+      <a href="/guides/best-cmmc-compliance-software/">CMMC compliance software for MSPs, compared</a>
+      <a href="/">{site.name}: {site.tagline}</a>
+    </nav>
+  </article>
+</GuideLayout>
+
+<style>
+  .toc { margin-top: 1.5rem; padding: 1rem 1.25rem; border: 1px solid var(--color-border); border-radius: var(--radius); font-size: 0.875rem; }
+  .toc ol { margin-top: 0; }
+  .reqs td:nth-child(3), .reqs td:nth-child(4) { white-space: nowrap; }
+  .reqs tbody th { font-variant-numeric: tabular-nums; }
+</style>

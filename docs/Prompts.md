@@ -32,3 +32,11 @@ to surface "last AI prompt" per project. Keep entries append-only.
 ## 2026-10-28 — v2.A decisions locked
 
 > Operator chose `/cmmc/` for the cluster and the Web3Forms form (no email alias) as the faceless Privacy contact. Recorded in docs/prd.md under the phases table: cluster URLs, hub/spoke linking rules, shared two-audience CTA, `src/lib/site.ts` identity config with empty credibility-layer fields, shared guide layout (roundup migrates in v2.B unchanged), homepage footer Privacy link → `/privacy/`.
+
+## 2026-10-28 — v2.B started: shared layout, Privacy, Level 2 hub
+
+> Built `src/lib/site.ts` (faceless identity, empty credibility fields), `GuideLayout.astro` + `guide.css`, `ClusterCta.astro` (contractor forward + MSP pilot). Migrated the roundup onto the layout; rendered article, meta and JSON-LD diffed identical. `/privacy/` with Web3Forms request form; use/no-sale and retention commitments carry [VERIFY] for operator sign-off (noindex + sitemap filter until cleared). Hub `/cmmc/level-2-requirements/`: all 110 NIST SP 800-171r2 requirements verbatim, with point values and POA&M eligibility encoded from 32 CFR 170.21/170.24 in `src/data/cmmc-level-2.ts`; tests check the rule arithmetic (42/14/2/51 split, -203 floor, 88 threshold, 46 eligible). SSP modeled as prerequisite (not a deduction) — that's what yields the published -203 floor. `[VERIFY]` gating test generalized to every page.
+
+## 2026-11-07 — v2.B: privacy commitments confirmed, markers cleared
+
+> Operator confirmed both Privacy statements (use/no-sale; retention/deletion). Removed the [VERIFY] markers, set verifyPending = false, dropped /privacy/ from the sitemap filter. Committed v2.B work so far (layout, identity config, CTA, Privacy, Level 2 hub). GSC 2026-10-10..11-07: roundup 180 imp, pos 68.6, 0 clicks; weekly impressions 39 → 63 → 53 → 34.

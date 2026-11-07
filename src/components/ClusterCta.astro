@@ -1,0 +1,38 @@
+---
+// src/components/ClusterCta.astro
+//
+// End-of-page CTA for /cmmc/ cluster pages (PRD v2.A). Two readers:
+// contractors forward the page to their IT provider; MSPs apply to the
+// pilot. Pre-launch wording only: no claim of a working product.
+import { site } from "../lib/site";
+
+interface Props {
+  /** Page path, used to build the forward link. */
+  path: string;
+  /** Page title, used as the forwarded email's subject. */
+  title: string;
+}
+
+const { path, title } = Astro.props;
+const pageUrl = `${site.url}${path}`;
+const mailto =
+  `mailto:?subject=${encodeURIComponent(title)}` +
+  `&body=${encodeURIComponent(`Worth a read before our next CMMC conversation:\n\n${pageUrl}`)}`;
+---
+<aside class="cta" id="next-step">
+  <h2>Next step</h2>
+
+  <h3>If an MSP or IT provider manages your Microsoft 365</h3>
+  <p>
+    Most Level 2 evidence lives in systems your provider administers. Send them this page and ask how they
+    will produce that evidence for your assessment.
+  </p>
+  <a href={mailto} class="cta-button">Email this page to your provider</a>
+
+  <h3>If you are the MSP</h3>
+  <p>
+    {site.name} is pre-launch and running a pilot with MSPs that support 10+ defense contractor clients. The
+    pilot is testing which Microsoft 365 evidence formats assessors and consultants accept.
+  </p>
+  <a href="/#pilot-form" class="cta-button">Apply to the MSP pilot</a>
+</aside>

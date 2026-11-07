@@ -3,8 +3,8 @@
 // strips frontmatter, asserts the v3.B SEO baseline tags remain.
 
 import { describe, it, expect } from 'vitest';
-import { readFileSync } from 'node:fs';
-import { join } from 'node:path';
+import { readFileSync, readdirSync } from 'node:fs';
+import { join, relative } from 'node:path';
 
 const raw = readFileSync(join(process.cwd(), 'src', 'pages', 'index.astro'), 'utf8');
 // Strip frontmatter (between leading `---` markers) so we just check the HTML body.
@@ -44,27 +44,43 @@ describe('SEO baseline (src/pages/index.astro)', () => {
 });
 
 // Any page with an unresolved [VERIFY] marker must render noindex and stay
-// out of the sitemap until the claim is checked.
-describe('[VERIFY] markers gate indexing', () => {
-  const guide = 'src/pages/guides/best-cmmc-compliance-software/index.astro';
-  const src = readFileSync(join(process.cwd(), guide), 'utf8');
-  const config = readFileSync(join(process.cwd(), 'astro.config.mjs'), 'utf8');
+// out of the sitemap until the claim is checked. Covers every .astro page that
+// declares `verifyPending`.
+function astroPages(dir) {
+  return readdirSync(dir, { withFileTypes: true }).flatMap((d) => {
+    const p = join(dir, d.name);
+    if (d.isDirectory()) return astroPages(p);
+    return d.name.endsWith('.astro') ? [p] : [];
+  });
+}
 
-  it('noindex + sitemap exclusion while [VERIFY] remains', () => {
-    if (!src.includes('[VERIFY')) return;
-    expect(src).toMatch(/const verifyPending = true;/);
-    expect(config).toContain('/guides/best-cmmc-compliance-software/');
+const pagesDir = join(process.cwd(), 'src', 'pages');
+const config = readFileSync(join(process.cwd(), 'astro.config.mjs'), 'utf8');
+const gated = astroPages(pagesDir)
+  .map((file) => ({ file, src: readFileSync(file, 'utf8') }))
+  .filter(({ src }) => src.includes('const verifyPending'));
+
+describe.each(gated.map(({ file, src }) => {
+  const route = '/' + relative(pagesDir, file).replace(/index\.astro$/, '').replace(/\.astro$/, '/');
+  return [route, src];
+}))('[VERIFY] markers gate indexing: %s', (route, src) => {
+  // Strip the explanatory header comment so its mention of [VERIFY] doesn't count.
+  const body = src.replace(/^---\n(?:\/\/.*\n)+/, '---\n');
+  const pending = body.includes('[VERIFY');
+
+  it('verifyPending matches whether [VERIFY] markers remain', () => {
+    expect(body).toMatch(pending ? /const verifyPending = true;/ : /const verifyPending = false;/);
   });
 
-  it('homepage links to the guide once indexable', () => {
-    if (src.includes('[VERIFY')) return;
+  it('sitemap filter excludes the page exactly while pending', () => {
+    if (pending) expect(config).toContain(`'${route}'`);
+    else expect(config).not.toContain(`'${route}'`);
+  });
+});
+
+describe('roundup', () => {
+  it('homepage links to the guide', () => {
     const landing = readFileSync(join(process.cwd(), 'src/components/LandingPage.tsx'), 'utf8');
     expect(landing).toContain('href="/guides/best-cmmc-compliance-software/"');
-  });
-
-  it('indexable + in sitemap once [VERIFY] is cleared', () => {
-    if (src.includes('[VERIFY')) return;
-    expect(src).toMatch(/const verifyPending = false;/);
-    expect(config).not.toContain("'/guides/best-cmmc-compliance-software/'");
   });
 });

@@ -764,7 +764,7 @@ function Footer() {
         </div>
         <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-muted-foreground">
           <a href="/guides/best-cmmc-compliance-software/" className="hover:text-foreground">CMMC compliance software for MSPs</a>
-          <a href="#" className="hover:text-foreground">Privacy</a>
+          <a href="/privacy/" className="hover:text-foreground">Privacy</a>
           <a href="#" className="hover:text-foreground">Terms</a>
           <a href="#" className="hover:text-foreground">Contact</a>
           <span className="text-xs">© {new Date().getFullYear()} MSP Proof</span>

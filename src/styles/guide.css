@@ -1,0 +1,28 @@
+/* src/styles/guide.css
+   Article styles shared by every page on GuideLayout. Global (not scoped)
+   because the article markup lives in each page's slot. */
+
+.guide { margin-top: 1.25rem; line-height: 1.7; }
+.guide h1 { font-size: clamp(1.75rem, 4vw, 2.5rem); line-height: 1.15; font-weight: 600; letter-spacing: -0.01em; color: var(--color-navy); }
+.guide h2 { margin-top: 2.75rem; font-size: 1.5rem; line-height: 1.25; font-weight: 600; color: var(--color-navy); }
+.guide h3 { margin-top: 1.75rem; font-size: 1.125rem; font-weight: 600; color: var(--color-navy); }
+.guide p, .guide ul, .guide ol { margin-top: 1rem; }
+.guide ul { padding-left: 1.25rem; list-style: disc; }
+.guide ol { padding-left: 1.25rem; list-style: decimal; }
+.guide li + li { margin-top: 0.4rem; }
+.guide a { color: var(--color-ring); text-decoration: underline; text-underline-offset: 2px; }
+.guide .meta { font-size: 0.8125rem; color: var(--color-muted-foreground); }
+.guide .lede { font-size: 1.125rem; }
+.table-wrap { margin-top: 1.25rem; overflow-x: auto; border: 1px solid var(--color-border); border-radius: var(--radius); }
+.table-wrap table { width: 100%; min-width: 640px; border-collapse: collapse; font-size: 0.8125rem; line-height: 1.45; }
+.table-wrap th, .table-wrap td { padding: 0.6rem 0.75rem; text-align: left; vertical-align: top; border-bottom: 1px solid var(--color-border); }
+.table-wrap thead th { background: var(--color-secondary); font-weight: 600; }
+.table-wrap tbody th { font-weight: 600; color: var(--color-navy); white-space: nowrap; }
+.table-wrap tr:last-child > * { border-bottom: 0; }
+.verify { display: block; margin-top: 0.75rem; padding: 0.25rem 0.5rem; background: var(--color-warning); color: var(--color-warning-foreground); font-size: 0.8125rem; font-weight: 600; }
+.cta { margin-top: 3rem; padding: 1.5rem; border-radius: var(--radius); background: var(--color-secondary); }
+.cta h2 { margin-top: 0; }
+.cta h3 { margin-top: 1.25rem; }
+.guide .cta-button { display: inline-block; margin-top: 1rem; padding: 0.6rem 1rem; border-radius: calc(var(--radius) - 2px); background: var(--color-navy); color: var(--color-navy-foreground); font-weight: 500; text-decoration: none; }
+.sources { font-size: 0.8125rem; }
+.related { margin-top: 2.5rem; display: flex; flex-direction: column; gap: 0.5rem; padding-top: 1.5rem; border-top: 1px solid var(--color-border); }

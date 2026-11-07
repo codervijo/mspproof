@@ -11,8 +11,8 @@ export default defineConfig({
   trailingSlash: 'always',
   integrations: [
     // A page with unresolved [VERIFY] markers renders noindex and must be
-    // excluded here too, e.g. sitemap({ filter: (page) => !page.includes('/x/') }).
-    sitemap(),
+    // excluded here too. Remove a path once its markers are cleared.
+    sitemap({ filter: (page) => ![].some((p) => page.includes(p)) }),
     react(),
   ],
   output: 'static',
