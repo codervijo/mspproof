@@ -40,3 +40,7 @@ to surface "last AI prompt" per project. Keep entries append-only.
 ## 2026-11-07 — v2.B: privacy commitments confirmed, markers cleared
 
 > Operator confirmed both Privacy statements (use/no-sale; retention/deletion). Removed the [VERIFY] markers, set verifyPending = false, dropped /privacy/ from the sitemap filter. Committed v2.B work so far (layout, identity config, CTA, Privacy, Level 2 hub). GSC 2026-10-10..11-07: roundup 180 imp, pos 68.6, 0 clicks; weekly impressions 39 → 63 → 53 → 34.
+
+## 2026-11-07 — v2.B: /cmmc/certification-cost/
+
+> Spoke targeting "cmmc certification cost" (350/mo). All figures from DoD's regulatory impact analysis in the 32 CFR 170 final rule (89 FR 83092, pp. 83181–83186), 2023 dollars, encoded in `src/data/cmmc-cost.ts` with tests that line items sum to DoD totals and that page-derived figures hold ($67,474 C3PAO premium, 31% C3PAO share, small-entity ESP $45,809 > C3PAO $31,234). No vendor price ranges (no primary source). Hub links down from #assessment. Note: operator's push of 5f0c66c didn't reach origin (origin still fc301c4).

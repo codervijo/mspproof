@@ -1,0 +1,251 @@
+---
+// src/pages/cmmc/certification-cost/index.astro
+//
+// /cmmc/ cluster spoke (PRD v2.B), targeting "cmmc certification cost" and
+// "c3pao cost". Every dollar figure comes from src/data/cmmc-cost.ts (DoD's
+// regulatory impact analysis in the 32 CFR 170 final rule, read 2026-11-07);
+// derived figures are tested in src/__tests__/cmmc-cost.test.js. No vendor
+// price ranges: none has a primary source.
+//
+// If a claim needs a [VERIFY] marker, set verifyPending = true and add this
+// path to the sitemap filter in astro.config.mjs; clear all three together.
+import GuideLayout from "../../../layouts/GuideLayout.astro";
+import ClusterCta from "../../../components/ClusterCta.astro";
+import { site, orgId } from "../../../lib/site";
+import { estimates, estimate, usd, ESP_RATE, smallEntityEspHours, SMALL_C3PAO_ESP_COST } from "../../../data/cmmc-cost";
+
+const path = "/cmmc/certification-cost/";
+const hub = "/cmmc/level-2-requirements/";
+const url = `${site.url}${path}`;
+const title = "CMMC Certification Cost: DoD's Estimate, Itemized";
+const h1 = "CMMC certification cost: DoD's own estimate, line by line, and what it leaves out";
+const description =
+  "DoD puts small-business CMMC Level 2 certification at $104,670 over three years. Here's every line of that estimate, the C3PAO share, and what it doesn't cover.";
+const checked = "2026-11-07";
+const verifyPending = false;
+
+const l1 = estimate("l1-small");
+const selfSmall = estimate("l2-self-small");
+const c3paoSmall = estimate("l2-c3pao-small");
+const c3paoFee = c3paoSmall.c3pao!;
+const premium = c3paoSmall.threeYear! - selfSmall.threeYear!;
+const feeShare = Math.round((c3paoFee.cost / c3paoSmall.total) * 100);
+const sizeLabel = { small: "Small business", other: "Other than small" } as const;
+
+const faqs = [
+  {
+    q: "How much does a C3PAO charge for a CMMC Level 2 assessment?",
+    a: `DoD's estimate models the C3PAO fee at ${usd(c3paoFee.cost)} for a small business (a ${c3paoFee.team}-person team for ${c3paoFee.hours} hours) and ${usd(estimate("l2-c3pao-other").c3pao!.cost)} for a larger one. DoD also says market forces of supply and demand will set actual C3PAO pricing, so treat these as a reference point and get quotes.`,
+  },
+  {
+    q: "Does the DoD estimate include fixing gaps?",
+    a: "No. For every level, the regulatory impact analysis assumes the contractor has already implemented the security requirements. It prices preparing for, undergoing and reporting the assessment, plus affirmations. Remediation, tools and licenses are outside it.",
+  },
+  {
+    q: "Is CMMC a one-time cost?",
+    a: `No. Level 2 assessments repeat every three years and affirmations every year, which is why DoD gives three-year totals. Level 1 self-assessments are annual: ${usd(l1.total)} a year for a small business in DoD's estimate.`,
+  },
+  {
+    q: "Can CMMC costs be charged to our contracts?",
+    a: "The CMMC rule doesn't decide that. DoD's response to public comments says the rule makes no change to cost allowability as defined in FAR 31.201-2. Ask your contracts or accounting adviser how your costs are treated.",
+  },
+  {
+    q: "Why are vendor estimates so different from DoD's?",
+    a: "Most vendor figures include getting compliant, not just being assessed, and few say where their numbers come from. Public comments on the rule also argued DoD's labor rates and hours were too low. DoD said its estimates were based on internal expertise and OMB Circular A-4 and that the market will set C3PAO prices.",
+  },
+];
+
+const jsonLd = [
+  {
+    "@type": "Article",
+    "@id": `${url}#article`,
+    headline: h1,
+    description,
+    url,
+    dateModified: checked,
+    author: { "@id": orgId },
+    publisher: { "@id": orgId },
+    mainEntityOfPage: url,
+    isPartOf: { "@id": `${site.url}${hub}#article` },
+  },
+  {
+    "@type": "FAQPage",
+    mainEntity: faqs.map((f) => ({
+      "@type": "Question",
+      name: f.q,
+      acceptedAnswer: { "@type": "Answer", text: f.a },
+    })),
+  },
+];
+---
+<GuideLayout
+  title={title}
+  description={description}
+  path={path}
+  breadcrumbs={[{ name: "CMMC Level 2 requirements", path: hub }, { name: "Certification cost" }]}
+  noindex={verifyPending}
+  jsonLd={jsonLd}
+>
+  <article class="guide">
+    <h1>{h1}</h1>
+    <p class="meta">
+      Figures from DoD's regulatory impact analysis for the CMMC program rule (32 CFR Part 170, 89 FR 83092), in 2023
+      dollars. Checked against the rule text on <time datetime={checked}>November 7, 2026</time>.
+    </p>
+
+    <p class="lede">
+      DoD estimates that a small business pays {usd(c3paoSmall.total)} in the year it gets a CMMC Level 2
+      certification from a C3PAO, and {usd(c3paoSmall.threeYear!)} over the three-year cycle. A Level 2
+      self-assessment comes to {usd(selfSmall.total)}, or {usd(selfSmall.threeYear!)} over three years. Level 1 is
+      {usd(l1.total)} a year. These figures assume every requirement is already in place. They price proving
+      compliance, not reaching it.
+    </p>
+
+    <p>
+      That assumption is the most important thing to know about any CMMC cost number. The rest of this page lays
+      out DoD's estimate line by line, shows how much of it goes to the C3PAO and how much to everyone else, and
+      lists what it leaves out. For what the assessment actually checks, see the
+      <a href={hub}>110 Level 2 requirements and how they're scored</a>.
+    </p>
+
+    <h2 id="estimates">DoD's estimates by assessment type</h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">Assessment</th>
+            <th scope="col">Company size</th>
+            <th scope="col">Assessment year</th>
+            <th scope="col">Three-year total</th>
+            <th scope="col">C3PAO fee</th>
+          </tr>
+        </thead>
+        <tbody>
+          {estimates.map((e) => (
+            <tr>
+              <th scope="row">{e.label}</th>
+              <td>{sizeLabel[e.size]}</td>
+              <td>{usd(e.total)}</td>
+              <td>{e.threeYear ? usd(e.threeYear) : `${usd(e.total)} a year`}</td>
+              <td>{e.c3pao ? usd(e.c3pao.cost) : "None"}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+    <p>
+      The three-year totals are the assessment year plus two annual affirmations, because Level 2 is reassessed
+      every three years and affirmed every year. Level 1 is self-assessed annually.
+    </p>
+
+    <h2 id="breakdown">Where the money goes</h2>
+    <p>
+      Here is the small-business Level 2 certification estimate, line by line. DoD modeled a small business as
+      having no full-time security staff: a director does the internal work and an external service provider (an
+      MSP or consultant) does most of the rest, at ${ESP_RATE} an hour.
+    </p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th scope="col">Line item</th><th scope="col">Cost</th></tr>
+        </thead>
+        <tbody>
+          {c3paoSmall.phases.map((p) => (
+            <tr><th scope="row">{p.name}</th><td>{usd(p.cost)}</td></tr>
+          ))}
+          <tr><th scope="row">C3PAO assessment ({c3paoFee.team}-person team, {c3paoFee.hours} hours)</th><td>{usd(c3paoFee.cost)}</td></tr>
+          <tr><th scope="row">Initial affirmation</th><td>{usd(c3paoSmall.initialAffirmation)}</td></tr>
+          <tr><th scope="row">Assessment-year total</th><td>{usd(c3paoSmall.total)}</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>
+      The C3PAO's fee is about {feeShare}% of the assessment year. The other {usd(c3paoSmall.total - c3paoFee.cost)}
+      is the contractor's side of the work. Inside it, the external service provider bills{" "}
+      {smallEntityEspHours["l2-c3pao-small"]} hours, or {usd(SMALL_C3PAO_ESP_COST)}. In DoD's own model, a small
+      business pays its MSP or consultant more to get through a certification assessment than it pays the
+      assessor.
+    </p>
+
+    <h2 id="excluded">What the estimate leaves out</h2>
+    <p>
+      For every level, the analysis states that there are no engineering costs because "it is assumed the contractor
+      or subcontractor has implemented the NIST SP 800-171 R2 security requirements." So none of these are in the
+      figures above:
+    </p>
+    <ul>
+      <li>closing gaps: configuration work, new tools and licenses, hardware, policy and procedure writing;</li>
+      <li>staff time to run the controls day to day between assessments;</li>
+      <li>
+        a POA&amp;M closeout assessment, which the line items don't break out separately (see{" "}
+        <a href={`${hub}#poam`}>what can go on a POA&amp;M</a>);
+      </li>
+      <li>a second attempt if the first assessment doesn't produce a CMMC status.</li>
+    </ul>
+    <p>
+      DoD's position is that "companies that are currently and validly attesting that they meet DFARS clause
+      252.204-7012 should not have difficulty passing a Level 2 self-assessment." For those companies, the figures
+      above are close to the whole bill. For everyone else, the gap-closing work comes first, and nothing in the
+      rule estimates it.
+    </p>
+
+    <h2 id="examples">Three budgets</h2>
+    <h3>Small subcontractor, contract requires Level 2 (Self)</h3>
+    <p>
+      {usd(selfSmall.total)} in the assessment year, then {usd(selfSmall.annualAffirmation)} for each annual
+      affirmation: {usd(selfSmall.threeYear!)} over three years. Most of it is {smallEntityEspHours["l2-self-small"]}
+      hours of outside help to plan, run and report the self-assessment. The score goes into SPRS; no assessor fee.
+    </p>
+    <h3>Same company, contract requires Level 2 (C3PAO)</h3>
+    <p>
+      {usd(c3paoSmall.threeYear!)} over three years, {usd(premium)} more than the self-assessment route. Only
+      {" "}{usd(c3paoFee.cost)} of that difference is the C3PAO's own fee. The rest is the extra preparation and
+      assessment-support hours DoD assumes when an outside assessor does the work.
+    </p>
+    <h3>The budget that doesn't hold</h3>
+    <p>
+      A company budgets {usd(c3paoSmall.total)}, schedules its C3PAO, and the assessment finds multifactor
+      authentication only covers admins. That gap is worth more than one point, so it can't go on a POA&amp;M, and
+      there is no conditional status (<a href={`${hub}#examples`}>the 107-point example</a> walks through why). The fix
+      still has to be made, and getting a status takes another assessment. DoD's figures price one assessment that
+      succeeds.
+    </p>
+
+    <h2 id="timing">When you'll need the C3PAO budget</h2>
+    <p>
+      Each contract names the CMMC status it requires. Phase 2 of the rollout, which would have started requiring
+      C3PAO certification at Level 2 in applicable solicitations from November 10, 2026, was suspended on July 13,
+      2026 pending a review.
+      Self-assessments under Phase 1 continue. See <a href={`${hub}#status`}>where the rollout stands</a> for the
+      current status, and check the CMMC requirement in each solicitation before you book an assessor.
+    </p>
+
+    <h2 id="faq">Frequently asked questions</h2>
+    {faqs.map((f) => (
+      <>
+        <h3>{f.q}</h3>
+        <p>{f.a}</p>
+      </>
+    ))}
+
+    <ClusterCta path={path} title={title} />
+
+    <h2 id="sources">Sources</h2>
+    <ul class="sources">
+      <li>
+        <a href="https://www.govinfo.gov/content/pkg/FR-2024-10-15/html/2024-22905.htm" rel="nofollow">Cybersecurity
+        Maturity Model Certification (CMMC) Program final rule, 89 FR 83092 (Oct 15, 2024)</a>: regulatory impact
+        analysis, Level 1 and Level 2 cost estimates (pp. 83181–83186), and DoD's response to cost comments
+      </li>
+      <li>
+        <a href="https://www.ecfr.gov/current/title-32/part-170" rel="nofollow">32 CFR Part 170</a> on eCFR (assessment
+        cycles and affirmations)
+      </li>
+    </ul>
+
+    <nav class="related" aria-label="Related">
+      <a href={hub}>CMMC Level 2 requirements: all 110, with point values</a>
+      <a href="/guides/best-cmmc-compliance-software/">CMMC compliance software for MSPs, compared</a>
+    </nav>
+  </article>
+</GuideLayout>
