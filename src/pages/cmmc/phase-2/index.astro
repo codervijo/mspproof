@@ -1,0 +1,252 @@
+---
+// src/pages/cmmc/phase-2/index.astro
+//
+// /cmmc/ cluster spoke (PRD v2.B): status of DoD's CMMC rollout, targeting
+// "cmmc phase 2" and "cmmc deadline 2026". "Phase 2" here is DoD's rollout
+// phase, not a project phase.
+//
+// Schedule from 32 CFR 170.3(e) (eCFR) and the DFARS rule's effective date
+// (90 FR 43560 / FR 2025-17359). Suspension details from Holland & Knight
+// (2026-07-31), Crowell & Moring (2026-07-13/14) and Covington (2026-09-21).
+// No primary DoW text was reachable (war.gov 403; acq.osd.mil cert failure),
+// so DFARS class deviation details are deliberately omitted: secondary
+// sources disagree on them.
+//
+// This page goes stale. Re-check status and bump `checked` + the "Status"
+// section whenever DoW publishes the task force report or a new schedule.
+//
+// If a claim needs a [VERIFY] marker, set verifyPending = true and add this
+// path to the sitemap filter in astro.config.mjs; clear all three together.
+import GuideLayout from "../../../layouts/GuideLayout.astro";
+import ClusterCta from "../../../components/ClusterCta.astro";
+import { site, orgId } from "../../../lib/site";
+
+const path = "/cmmc/phase-2/";
+const hub = "/cmmc/level-2-requirements/";
+const url = `${site.url}${path}`;
+const title = "CMMC Phase 2 Status: Suspended, and What Still Applies";
+const h1 = "CMMC Phase 2 is suspended: what changed, what still applies, and what to watch";
+const description =
+  "CMMC Phase 2 was due November 10, 2026. DoD suspended it in July. Here's the original schedule, what the suspension changed, and what contractors still owe.";
+const checked = "2026-11-07";
+const checkedLabel = "November 7, 2026";
+const verifyPending = false;
+
+// 32 CFR 170.3(e): Phase 1 starts on the DFARS rule's effective date
+// (Nov 10, 2025); each later phase starts one calendar year after the last.
+const schedule = [
+  {
+    phase: "Phase 1",
+    start: "Nov 10, 2025",
+    adds: "Level 1 (Self) or Level 2 (Self) as a condition of award in applicable solicitations; Level 2 (C3PAO) at DoD's discretion",
+    now: "In effect",
+  },
+  {
+    phase: "Phase 2",
+    start: "Nov 10, 2026",
+    adds: "Level 2 (C3PAO) as a condition of award in applicable solicitations; Level 3 at DoD's discretion",
+    now: "Suspended",
+  },
+  {
+    phase: "Phase 3",
+    start: "Nov 10, 2027",
+    adds: "Level 2 (C3PAO) for all applicable solicitations and option periods; Level 3 as a condition of award",
+    now: "On hold",
+  },
+  {
+    phase: "Phase 4",
+    start: "Nov 10, 2028",
+    adds: "Full implementation, including option periods on contracts awarded before Phase 4",
+    now: "On hold",
+  },
+];
+
+const faqs = [
+  {
+    q: "Is CMMC cancelled?",
+    a: "No. DoD suspended the rollout of Phase 2 and later milestones. The CMMC program rule (32 CFR Part 170) and the DFARS acquisition rule are still in force, and Phase 1 requirements continue.",
+  },
+  {
+    q: "Do I still need a score in SPRS?",
+    a: "Yes. Phase 1 self-assessments, SPRS score posting and annual affirmations continue, and DFARS 252.204-7012 still requires NIST SP 800-171 Rev 2.",
+  },
+  {
+    q: "Can a contract still require a C3PAO assessment?",
+    a: "The implementation memo directs contracting officers to amend active solicitations to remove Level 2 (C3PAO) and Level 3 requirements, and to modify existing contracts before the next option period or scheduled administrative modification. Until a contract is modified, its existing CMMC requirements still apply. Read the CMMC clause in each contract.",
+  },
+  {
+    q: "When will Phase 2 start?",
+    a: `No new date has been announced as of ${checkedLabel}. The rollout resumes, or changes, when DoD acts on the task force's review.`,
+  },
+  {
+    q: "Is there a CMMC deadline in 2026?",
+    a: "Not the one most people mean. November 10, 2026 was the scheduled start of Phase 2, and that is suspended. The deadlines that still bind you are your own: a current self-assessment in SPRS where a contract requires one, the annual affirmation, and 180 days to close any POA&M.",
+  },
+];
+
+const jsonLd = [
+  {
+    "@type": "Article",
+    "@id": `${url}#article`,
+    headline: h1,
+    description,
+    url,
+    dateModified: checked,
+    author: { "@id": orgId },
+    publisher: { "@id": orgId },
+    mainEntityOfPage: url,
+    isPartOf: { "@id": `${site.url}${hub}#article` },
+  },
+  {
+    "@type": "FAQPage",
+    mainEntity: faqs.map((f) => ({
+      "@type": "Question",
+      name: f.q,
+      acceptedAnswer: { "@type": "Answer", text: f.a },
+    })),
+  },
+];
+---
+<GuideLayout
+  title={title}
+  description={description}
+  path={path}
+  breadcrumbs={[{ name: "CMMC Level 2 requirements", path: hub }, { name: "Phase 2 status" }]}
+  noindex={verifyPending}
+  jsonLd={jsonLd}
+>
+  <article class="guide">
+    <h1>{h1}</h1>
+    <p class="meta">Status checked <time datetime={checked}>{checkedLabel}</time>. This page is updated when DoD changes the schedule.</p>
+
+    <p class="lede">
+      CMMC Phase 2 was scheduled to start on November 10, 2026. It would have made a Level 2 certification from a
+      C3PAO a condition of award in applicable DoD solicitations. On July 13, 2026, the Department of War suspended
+      it, put later milestones on hold, and launched a CMMC Reform Task Force review. As of {checkedLabel}, no new
+      date has been set. Phase 1 continues: self-assessments, SPRS scores, annual affirmations and NIST SP 800-171
+      Rev 2 under DFARS 252.204-7012 all still apply.
+    </p>
+
+    <h2 id="schedule">The original schedule, and where each phase stands</h2>
+    <p>
+      32 CFR 170.3(e) sets out four phases. Phase 1 began when the DFARS acquisition rule took effect on November 10,
+      2025, and each later phase begins one calendar year after the one before it.
+    </p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th scope="col">Phase</th><th scope="col">Scheduled start</th><th scope="col">What it adds</th><th scope="col">Status</th></tr>
+        </thead>
+        <tbody>
+          {schedule.map((r) => (
+            <tr>
+              <th scope="row">{r.phase}</th>
+              <td>{r.start}</td>
+              <td>{r.adds}</td>
+              <td>{r.now}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+    <p>
+      The regulation's text hasn't changed. The suspension pauses how DoD applies it in solicitations and contracts.
+    </p>
+
+    <h2 id="changed">What the suspension changed</h2>
+    <p>Two memos announced on July 13, 2026 did the work:</p>
+    <ul>
+      <li>
+        <strong>The CIO memo</strong> suspended the Phase 2 transition and pending and future implementation
+        milestones, and set up a CMMC Reform Task Force to run a 60-day "top-to-bottom" review with a public request
+        for information.
+      </li>
+      <li>
+        <strong>The implementation memo</strong> from the Under Secretary of Defense for Acquisition and Sustainment
+        told contracting officers to amend active solicitations to remove Level 2 (C3PAO) and Level 3 requirements as
+        soon as possible, and to modify existing contracts before their next option period or scheduled
+        administrative modification. Until a contract is modified, its existing CMMC requirements still apply.
+      </li>
+    </ul>
+
+    <h2 id="still-applies">What still applies</h2>
+    <ul>
+      <li><strong>DFARS 252.204-7012</strong> and NIST SP 800-171 Rev 2 for covered defense information.</li>
+      <li><strong>FAR 52.204-21</strong> basic safeguarding for federal contract information.</li>
+      <li>
+        <strong>Phase 1 CMMC requirements:</strong> Level 1 (Self) and Level 2 (Self) in applicable solicitations, with
+        results and annual affirmations in SPRS. See <a href="/cmmc/self-assessment/">how to run a Level 2
+        self-assessment and post it in SPRS</a>.
+      </li>
+      <li>
+        <strong>The 110 Level 2 requirements</strong> and how they're scored, which the suspension didn't touch. See
+        <a href={hub}>all 110 CMMC Level 2 requirements</a>.
+      </li>
+    </ul>
+    <p>
+      A self-assessment score is still a claim made to the government. A Level 2 (Self) status that doesn't hold up
+      is still a problem, with or without Phase 2.
+    </p>
+
+    <h2 id="task-force">The task force review</h2>
+    <p>
+      Responses to the task force's request for information were due August 14, 2026. Its report was due to the
+      DoW Chief Information Officer on September 11, 2026. Covington reported on September 21 that it had not been
+      made public, and as of {checkedLabel} we haven't found a published report or a new rollout date. The request
+      for information specifically asked how cloud and managed service providers should be treated, so that part
+      of the report matters if an MSP runs your IT.
+    </p>
+
+    <h2 id="now">What to do while it's paused</h2>
+    <ul>
+      <li>
+        <strong>Read each contract's CMMC clause.</strong> The required level is written into DFARS 252.204-7021 in each
+        contract. A C3PAO requirement in an existing contract applies until the contract is modified.
+      </li>
+      <li>
+        <strong>Keep your self-assessment current.</strong> Final Level 2 (Self) is valid for three years with an
+        affirmation every year; Conditional status lasts 180 days.
+      </li>
+      <li>
+        <strong>Keep the evidence.</strong> Artifacts used in an assessment must be kept for six years. If C3PAO
+        certification returns, the evidence you collect now is what an assessor will examine.
+      </li>
+      <li>
+        <strong>Budget for both routes.</strong> DoD's own estimates for self-assessment and C3PAO certification are in
+        <a href="/cmmc/certification-cost/">what CMMC certification costs</a>.
+      </li>
+    </ul>
+
+    <h2 id="watch">What to watch</h2>
+    <ul>
+      <li>Publication of the task force's report and DoW's decisions on it.</li>
+      <li>A new schedule for Phase 2 and later phases, or changes to the rule itself.</li>
+      <li>How solicitations you bid on state their CMMC requirement.</li>
+      <li>Any change to how external service providers, including MSPs, are treated in scope.</li>
+    </ul>
+
+    <h2 id="faq">Frequently asked questions</h2>
+    {faqs.map((f) => (
+      <>
+        <h3>{f.q}</h3>
+        <p>{f.a}</p>
+      </>
+    ))}
+
+    <ClusterCta path={path} title={title} />
+
+    <h2 id="sources">Sources</h2>
+    <ul class="sources">
+      <li><a href="https://www.ecfr.gov/current/title-32/part-170/section-170.3" rel="nofollow">32 CFR 170.3(e)</a> (phased implementation); <a href="https://www.govinfo.gov/content/pkg/FR-2025-09-10/html/2025-17359.htm" rel="nofollow">DFARS CMMC acquisition rule, effective November 10, 2025</a></li>
+      <li><a href="https://www.war.gov/News/Releases/Release/Article/4542329/forging-the-arsenal-of-freedom-department-of-war-suspends-cmmc-phase-ii-require/" rel="nofollow">DoW release suspending Phase II (July 2026)</a></li>
+      <li>Summaries of the suspension memos: <a href="https://www.hklaw.com/en/insights/publications/2026/07/dow-suspends-cmmc-phase-ii-requirements" rel="nofollow">Holland &amp; Knight (July 31, 2026)</a>; <a href="https://www.crowell.com/en/insights/client-alerts/department-of-war-immediately-suspends-cmmc-phase-ii-requirements-launches-60-day-reform-review" rel="nofollow">Crowell &amp; Moring (July 13, 2026)</a></li>
+      <li>Task force status: <a href="https://www.insidegovernmentcontracts.com/2026/09/cmmc-reform-task-force-updates-september-2026/" rel="nofollow">Covington, Inside Government Contracts (September 21, 2026)</a></li>
+    </ul>
+
+    <nav class="related" aria-label="Related">
+      <a href={hub}>CMMC Level 2 requirements: all 110, with point values</a>
+      <a href="/cmmc/self-assessment/">CMMC self-assessment: run, score, and post in SPRS</a>
+      <a href="/cmmc/certification-cost/">CMMC certification cost: DoD's estimate, itemized</a>
+    </nav>
+  </article>
+</GuideLayout>
