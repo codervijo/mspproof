@@ -18,7 +18,7 @@ const description = `What ${site.name} collects through this website, who proces
 const effective = "2026-10-28";
 const verifyPending = false;
 
-const gaEnabled = Boolean(import.meta.env.PUBLIC_GA_ID);
+const gaEnabled = Boolean((import.meta.env.PUBLIC_GA_ID || "G-KD3RG3GZC8"));
 const web3formsKey = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? "";
 ---
 <GuideLayout
